@@ -1,0 +1,11 @@
+{% load rest_framework %}
+
+<form method="get" action="" class="django-filter-form">
+  {% for field in filter.form %}
+    <div class="django-filter-field">
+      {{ field.label_tag }} {{ field }}
+    </div>
+  {% endfor %}
+
+  <button type="submit">Filter</button>
+</form>

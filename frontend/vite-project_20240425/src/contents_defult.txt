@@ -1,0 +1,130 @@
+やる事
+・カード（カルーセル）の文字にリンク（:to）をつける
+・タグ（アカウント/タグ）のリンク（:to）をつける
+・表のその他の文字にリンク（:to）をつける
+・あ
+
+コンポーネント一覧
+表
+カード
+
+
+
+
+
+
+
+
+
+
+少し大きい文字
+　v-card-title text-white text-h3
+
+普通の大きさの文字
+　my-font-size-20 my-fit-contents my-text-size-40
+
+小さい文字
+　my-text-size-30
+
+改行しない
+style="white-space: nowrap; overflow-x: auto"
+
+
+
+HOME　/
+　動画　/video
+　　ランキング　/video/ranking
+　　リスト　/video/list
+　　　動画　/video/list
+　　　パフォーマー　/performer/list
+　　　タグ　/performer/tag
+　　ディスプレイリスト
+    　動画　/video
+　　　パフォーマー　/performer
+　　　タグ　/tag
+
+
+　記事　/article
+　　ランキング　/article/ranking
+　　リスト　/article/list
+　　　まとめ　/article/matome
+　　　　動画　/article/matome/video
+　　　　パフォーマー　/article/matome/performer
+　　　　その他1　/article/matome/[sonota1]
+　　　　その他2　/article/matome/[sonota2]
+　　　雑記　/article/zakki
+　　　　気まぐれ1　/article/zakki/[kimagure1]
+　　　　気まぐれ2　/article/zakki/[kimagure2]
+
+HOME
+　ー記事
+　ーーーーーーーー記事ーその他記事
+                    ーランキング
+　ー動画
+　ーーーーーーーー動画ーその他記事
+                    ーランキング
+                    ーリスト
+　ーランキング記事
+　ーランキング動画
+
+
+
+Django article option
+    
+
+
+
+
+
+
+
+
+// ■　ARTICLE_LIST_DUP　作成
+// // let SUBCONTENTS_CLASS_MAJOR = ref()
+// // let SUBCONTENTS_CLASS_MEDIUM = ref()
+// // let SUBCONTENTS_CLASS_MINOR = ref()
+// let ARTICLE_LIST_DUP = ref()
+// watch(ARTICLE_LIST, (newVal, oldVal) => {
+//   if (SUBCONTENTS.value === "article" && newVal) {
+//     const uniqueTitles = [...new Set(newVal.map(item => item.title))];
+//     ARTICLE_LIST_DUP.value = uniqueTitles.map(title => {
+//       return newVal.find(item => item.title === title);
+//     });
+//     SUBCONTENTS_ALL.value = ARTICLE_LIST_DUP.value;
+
+//   //  SUBCONTENTS_CLASS_MAJOR.value = [...new Set(newVal.map(item => item.classmajor))];
+//   //  SUBCONTENTS_CLASS_MEDIUM.value = [...new Set(newVal.map(item => item.classmedium))];
+//   //  SUBCONTENTS_CLASS_MINOR.value = [...new Set(newVal.map(item => item.classminor))];
+//   }
+// })
+// if (SUBCONTENTS.value === "article" && ARTICLE_LIST.value) {
+//     const uniqueTitles = [...new Set(ARTICLE_LIST.value.map(item => item.title))];
+//     ARTICLE_LIST_DUP.value = uniqueTitles.map(title => {
+//       return ARTICLE_LIST.value.find(item => item.title === title);
+//     });
+//     SUBCONTENTS_ALL.value = ARTICLE_LIST_DUP.value;
+//   }    
+
+
+
+
+watch(ARTICLE_LIST_DUP, (newVal, oldVal) => {
+  console.log("triger_ARTICLE_LIST_DUP", newVal)
+  if (newVal) {
+    articleparams.value = {
+      classmajor: [...new Set(newVal.map(item => item.classmajor))],
+      classmedium: [...new Set(newVal.map(item => item.classmedium))],
+      classminor: [...new Set(newVal.map(item => item.classminor))],
+    }
+    filteredDataArticle.value = newVal
+  }
+})
+if (ARTICLE_LIST_DUP.value) {
+    articleparams.value = {
+    classmajor: [...new Set(ARTICLE_LIST_DUP.value.map(item => item.classmajor))],
+    classmedium: [...new Set(ARTICLE_LIST_DUP.value.map(item => item.classmedium))],
+    classminor: [...new Set(ARTICLE_LIST_DUP.value.map(item => item.classminor))],
+  }
+  filteredDataArticle.value = ARTICLE_LIST_DUP.value
+  }
+

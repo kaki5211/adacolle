@@ -1,0 +1,9 @@
+あらかじめやる事入れる
+
+・データUP:imagesを入れる。
+・データUP:tagsを入れる。
+・Page：tags
+・Page：tags
+
+http://127.0.0.1:8000/api/performer_list_view/ 
+http://172.20.10.5:8000/api/performer_list_view/

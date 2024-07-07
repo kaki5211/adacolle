@@ -1,0 +1,247 @@
+
+
+
+
+
+
+<template>
+<head>
+    <meta charset="utf-8">
+
+
+            <!-- 　要らないかも　■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+    Google ADSense
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1203419703310974" crossorigin="anonymous"></script>
+
+        
+         Google tag (gtag.js)
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-BS7M4Z8XRZ"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-BS7M4Z8XRZ');
+        gtag('config', 'UA-244839165-1');
+        </script>
+
+         Google Tag Manager
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-KKTTVX3');</script>
+         End Google Tag Manager
+         ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+
+
+    
+
+    <title>
+        {% with breadcrumb|length as el_ %}
+            {% if el_ == 1 %}BOOK I.C. ～本の感想を創造するブログ～
+            {% elif el_ == 2 %}{{breadcrumb.1.title_info}} | BOOK I.C.
+            {% elif el_ == 3 %}【本感想 ブログ】 {{breadcrumb.2.title_info}} | BOOK I.C.
+            {% endif %}
+        {% endwith %}
+    </title>
+
+    {% comment %} <link rel="shortcut icon" href="{% static "static/media8.jpg" %}" /> {% endcomment %}
+    <link rel="icon" class="my-icon" href="{% static "static/book-ic_icon.svg" %}" type="image/svg+xml">
+
+
+
+
+    <!-- jQuery -->
+        <!-- {% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> {% endcomment %} -->
+
+    <!-- VUETIFY -->
+    <!-- {% comment %} <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"> {% endcomment %} -->
+    <!-- {% comment %} <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet"> {% endcomment %} -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"> -->
+    <!-- VUETIFY-icon -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet"> -->
+    <!-- {% comment %} <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet" id="my_materialdesignicons"> {% endcomment %} -->
+
+
+
+
+
+<!-- フォント　■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+   <!-- Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+
+
+    <!-- sawarabi gothic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&display=swap" rel="stylesheet">
+<!-- フォント　■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+
+
+<!-- テーマカラー　必要？　■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+<meta name="theme-color" content="#455045">
+
+
+<!-- 検索エンジン、キーワード -->
+    <meta name="keywords" content="book-ic,本,本感想,本の感想,感想,書評,書店,小説,文庫,ブログ,個人ブログ,読書,書籍,記録,ネタバレ読書,読書記録">
+
+
+
+    <!-- SEO サムネイル画像-->
+    <meta name="thumbnail" content="{% static "static/book-ic_picture.svg" %}" />
+
+
+
+
+
+    <!-- URL 正規化 -->
+    {% comment %} <link rel="canonical" href={{ request.build_absolute_uri }} /> {% endcomment %}
+    {% with breadcrumb|length as el_ %}
+        {% if el_ == 1 %}<link rel="canonical" href="{{ breadcrumb.0.url_path_ }}" />
+        {% elif el_ == 2 %}<link rel="canonical" href="{{ breadcrumb.1.url_path_ }}" />
+        {% elif el_ == 3 %}
+            {% if breadcrumb.1.title_info == "書籍一覧" %}
+                <link rel="canonical" href="{{ breadcrumb.2.url_path_ }}1/" />
+            {% else %}
+                <link rel="canonical" href="{{ breadcrumb.2.url_path_ }}" />
+            {% endif %}
+            
+        {% endif %}
+    {% endwith %}
+        
+
+
+
+    <!-- adsense 広告　不要
+    {% if  DEBUG == False %}
+    <script type="application/javascript" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1203419703310974"
+     crossorigin="anonymous"></script>
+     {% endif %}   
+     -->   
+
+
+
+
+
+    <!-- meta twitter -->
+    <!-- 1 -->
+    {% with breadcrumb|length as el_ %}
+        {% if el_ == 1 %}<meta property="og:description" content=" 「他の人はどう感じているんだろう」。本を読み終えた後の思いを満たすためにつくりました！。タグ | 小説,文庫,ブログ,本の感想,本感想,読書,書評,書籍,記録,ネタバレ | BOOK I.C."/>
+        {% elif el_ == 3 %}
+            {% if breadcrumb.1.title_info == "書籍一覧" %}<meta property="og:description" content="{{breadcrumb.2.title_info}} | — あらすじ — {{ book_info.contents_synopsis| truncatechars:80 }}"/>
+            {% elif breadcrumb.1.title_info == "その他 記事" %}<meta property="og:description" content="{{breadcrumb.2.title_info}} | BOOK I.C. ～本の感想を創造するブログ～,{{ other_info.contents_synopsis| truncatechars:80 }}"/>
+            {% endif %}
+        {% endif %}
+    {% endwith %}
+    <!-- 2 -->
+    <meta charset="utf-8">
+    <meta http-equiv="content-language" content="ja">
+
+    <!-- 3 -->
+    {% with breadcrumb|length as el_ %}
+    {% if el_ == 1 %}<meta name="robots" content="index">
+        {% elif el_ == 3 %}
+            {% if breadcrumb.1.title_info == "書籍一覧" %}<meta name="robots" content="index">
+            {% elif breadcrumb.1.title_info == "その他 記事" %}<meta name="robots" content="noindex,nofollow">
+            {% endif %}
+        {% endif %}
+    {% endwith %}
+
+
+
+
+
+    <!-- og 設定 -->
+    <!-- １．page type -->
+    {% if breadcrumb|length == 1 %}<meta property="og:type" content="website" />
+    {% else %}<meta property="og:type" content="article"/>
+    {% endif %}
+    <!-- ２．title -->
+    {% with breadcrumb|length as el_ %}
+        {% if el_ == 1 %}<meta property="og:title" content="BOOK I.C. ～本の感想を創造するブログ～"/>
+        {% elif el_ == 2 %}<meta property="og:title" content="{{breadcrumb.1.title_info}} | BOOK I.C."/>
+        {% elif el_ == 3 %}<meta property="og:title" content="【本感想 ブログ】 {{breadcrumb.2.title_info}} | BOOK I.C."/>
+        {% endif %}
+    {% endwith %}
+    <!-- ３．ページ説明文 -->
+    {% with breadcrumb|length as el_ %}
+        {% if el_ == 1 %}<meta property="og:description" content=" 「他の人はどう感じているんだろう」。本を読み終えた後の思いを満たすためにつくりました！。タグ | 小説,文庫,ブログ,本の感想,本感想,読書,書評,書籍,記録,ネタバレ | BOOK I.C."/>
+        {% elif el_ == 3 %}
+            {% if breadcrumb.1.title_info == "書籍一覧" %}<meta property="og:description" content="{{breadcrumb.2.title_info}} | — あらすじ — {{ book_info.contents_synopsis| truncatechars:70 }}"/>
+            {% elif breadcrumb.1.title_info == "その他 記事" %}<meta property="og:description" content="{{breadcrumb.2.title_info}} | BOOK I.C. ～本の感想を創造するブログ～,{{ other_info.contents_synopsis| truncatechars:70 }}"/>
+            {% endif %}
+        {% endif %}
+    {% endwith %}
+    <!-- ４．URL -->
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <!-- ５．サイト名 -->
+    <meta property="og:site_name" content="BOOK I.C." />
+    <!-- ６．その他 -->
+    {% comment %} <meta property="article:publisher" content="(6)FacebookページのURL" /> {% endcomment %}
+    <!-- ７．表示画像 -->
+    <meta property="og:image" content="{% static "static/book-ic.png" %}" />
+
+    <!-- Twitterカードの設定 -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@BOOK_IC" />
+
+
+</head>
+
+
+
+
+
+
+
+  
+  
+  </template>
+
+
+
+
+<script lang="ts" setup>
+import { useStore } from 'vuex';
+import { computed, ref } from 'vue';
+
+
+const store = useStore();
+
+
+const ARTICLE_LIST = computed(() => { return store.getters.GET_ARTICLE_LIST; });
+const VIDEOS = computed(() => { return store.getters.GET_VIDEOS; });
+const VIDEOS_FILTERED = computed(() => { return store.getters.GET_VIDEOS_FILTERED; });
+
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const TableargetvideoProductNumber  = route.params.video_productnumber;
+const VIDEO_DETAIL = computed(() => { return VIDEOS.value.find(item => item.video_productnumber === TableargetvideoProductNumber); });
+
+
+
+// 
+import { watch } from 'vue'
+
+const loading = ref(false)
+
+watch(loading, (val) => {
+  if (!val) return
+
+  setTimeout(() => (loading.value = false), 100)
+})
+
+
+
+</script>
+
+
+<style scoped>
+
+
+
+</style>
