@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "build": "node --max-old-space-size=4096 vue-tsc --noEmit && node --max-old-space-size=4096 vite build",
+
+    "build": "node --max-old-space-size=4096 ./node_modules/.bin/vue-tsc --noEmit && node --max-old-space-size=4096 ./node_modules/.bin/vite build",
 
     "preview": "vite preview",
     "lint": "eslint . --fix --ignore-path .gitignore",
