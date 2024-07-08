@@ -12,8 +12,8 @@
   </v-main>
 </template>
 
-<script lang="ts" setup>
-import Breadcrumbs from '@/components/breadcrumbs/breadcrumbs-v1.vue'
+<script setup>
+import Breadcrumbs from '@/components/breadcrumbs/Breadcrumbs-v1.vue'
 import FooterMyV2 from '@/components/footer/Footer-my-v2.vue'
 
 
