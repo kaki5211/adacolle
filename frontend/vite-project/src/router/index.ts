@@ -5,6 +5,8 @@
  * Documentation: https://router.vuejs.org/
  */
 
+// @ts-ignore
+
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 

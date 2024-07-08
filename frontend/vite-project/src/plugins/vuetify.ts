@@ -4,6 +4,8 @@
  * Framework documentation: https://vuetifyjs.com`
  */
 
+// @ts-ignore
+
 // Styles
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'

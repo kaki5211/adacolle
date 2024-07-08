@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 
+// @ts-ignore
+
 // import createPersistedState from 'vuex-persistedstate'
 
 
