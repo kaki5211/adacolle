@@ -10,7 +10,7 @@
 
     <h2>Version 1</h2>
 
-    <ContentVideoV1 />
+    <!-- <ContentVideoV1 /> -->
 
     <br>
 
@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts" setup>
-import ContentVideoV1 from '@/components/content/Content-Video-v1.vue'
+// import ContentVideoV1 from '@/components/content/Content-Video-v1.vue'
 import ContentV2 from '@/components/content/Content-v2.vue'
 import ContentV3 from '@/components/content/Content-v3.vue'
 import ContentV4 from '@/components/content/Content-v4.vue'
