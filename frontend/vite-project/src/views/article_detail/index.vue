@@ -11,7 +11,7 @@
 
     <div class="py-1" />
 
-    <ArticleDetailV3 />
+    <!-- <ArticleDetailV3 /> -->
     
     <div class="py-1" />
 
@@ -39,8 +39,8 @@
 
 <script lang="ts" setup>
 import ArticleDetailV1 from '@/components/article_detail/ArticleDetail-v1.vue'
-import ArticleDetailV2 from '@/components/article_detail/ArticleDetail-v2.vue'
-import ArticleDetailV3 from '@/components/article_detail/ArticleDetail-v3.vue'
+// import ArticleDetailV2 from '@/components/article_detail/ArticleDetail-v2.vue'
+// import ArticleDetailV3 from '@/components/article_detail/ArticleDetail-v3.vue'
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';

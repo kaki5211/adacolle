@@ -102,7 +102,7 @@
   </v-system-bar>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 const emit = defineEmits(['click:toggle'])
 
 import { useDisplay } from 'vuetify'

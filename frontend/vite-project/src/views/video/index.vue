@@ -36,8 +36,8 @@
 </template>
 
 <script lang="ts" setup>
-import VideoV3 from '@/components/video/Video-v3.vue'
-import VideoV1 from '@/components/video/Video-v1.vue'
+// import VideoV3 from '@/components/video/Video-v3.vue'
+// import VideoV1 from '@/components/video/Video-v1.vue'
 import MyCardV1 from '@/components/global/my-card-v1.vue'
 import MyCardFilterV1 from '@/components/global/my-card-filter-v1.vue'
 
@@ -47,7 +47,6 @@ import { computed, ref } from 'vue';
 const store = useStore();
 
 // const ARTICLE_LIST = computed(() => { return store.getters.GET_ARTICLE_LIST; });
-const VIDEOS = computed(() => { return store.getters.GET_VIDEOS; });
 const VIDEOS_FILTERED = computed(() => { return store.getters.GET_VIDEOS_FILTERED; });
 
 console.log(VIDEOS_FILTERED)

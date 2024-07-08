@@ -40,8 +40,6 @@
 </template>
 
 <script lang="ts" setup>
-import ArticleV1 from '@/components/article/Article-v1.vue'
-// import ArticleV3 from '@/components/article/Article-v3.vue'
 import MyCardV1 from '@/components/global/my-card-v1.vue'
 import MyCardFilterV1 from '@/components/global/my-card-filter-v1.vue'
 

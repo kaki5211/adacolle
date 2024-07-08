@@ -22,7 +22,15 @@
       ]
      }
   },
+  "exclude": [
+    "src/components/article/Article-v3.vue",
+    "src/components/article/Article-v3__2.vue",
+    "src/components/article/Article-v4.vue",
+    "src/components/article_detail/ArticleDetail-v3.vue",
+    "src/components/video/Video-v3.vue",
+  ]
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "exclude": ["node_modules"]
 }
+

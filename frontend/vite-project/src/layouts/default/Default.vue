@@ -8,7 +8,7 @@
   </v-app>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 // Components
 import DefaultDrawer from './Drawer.vue'
 import DefaultSystemBar from './SystemBarMy.vue'
