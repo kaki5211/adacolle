@@ -35,7 +35,7 @@ else:
 
     DEBUG = False
 
-    ALLOWED_HOSTS = ["localhost", "127.0.0.1", "adacolle.jp"]
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1", "adacolle.jp", "162.43.71.83"]
 
 
     SECURE_HSTS_SECONDS = 31536000
