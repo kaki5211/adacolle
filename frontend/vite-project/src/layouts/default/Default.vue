@@ -17,7 +17,7 @@ import DefaultView from './View.vue';
 // Utilities
 import { shallowRef } from 'vue';
 
-const drawer = shallowRef<boolean>(false); // 正しい型指定と初期値の設定
+const drawer = shallowRef(false); // 正しい型指定と初期値の設定
 
 </script>
 
