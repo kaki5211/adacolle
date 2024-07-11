@@ -5,13 +5,13 @@
         <logo />
       </template>
 
-      <v-toolbar-items v-if="mdAndUp">
+      <!-- <v-toolbar-items v-if="mdAndUp">
         <v-btn text="Home" />
 
         <v-btn text="Portfolio" />
 
         <v-btn text="Contact" />
-      </v-toolbar-items>
+      </v-toolbar-items> -->
 
       <template #append>
         <template v-if="mdAndUp">
