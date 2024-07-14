@@ -2,7 +2,24 @@
   <v-container class="px-2">
 
 
+    <v-card>  
+      <v-container class="px-2 px-md-4">
+        <v-card v-if="true" class="text-center elevation-0 py-10">
+            <h2 class="text-h5 text-md-h3 mx-auto mb-4 ">
+              <strong class="text-h4 text-md-h2">動画</strong>（FANZA 素人 ）
+            </h2>
+            <div class="text-medium-emphasis text-md-h6 text-body-3 pl-2">
+              FANZAの素人動画を厳選してピックアップ。
+            </div>
+          </v-card>
+      </v-container>
+    </v-card>
+
+    <div class="py-1" />
+
     
+    <v-divider v-if="(index+1) % 3 == 0" class="my-divider d-none d-md-block"></v-divider>
+    <v-divider v-if="(index+1) % 2 == 0" class="my-divider d-md-none"></v-divider>
 
 
 
@@ -13,11 +30,11 @@
       <MyCardV1
         :kind="kind"
         :my_card_list="[VIDEO_DETAIL]"
-        :boolean_card_title="0 == 0 ? true : false"
-        string_card_title_1="動画"
-        string_card_title_2="（FANZA 素人 ）"
-        string_card_title_3="FANZAの素人動画を厳選してピックアップ。"
-        :boolean_detail = false
+        :boolean_card_title="0 == 1 ? true : false"
+        string_card_title_1=""
+        string_card_title_2=""
+        string_card_title_3=""
+        :boolean_detail = true
         string_detail = ""
         string_detail_sub = ""
         :boolean_detail_one = true
@@ -37,14 +54,14 @@
     >
       <MyCardV1
         :kind="kind"
-        :my_card_list="VIDEOS"
+        :my_card_list="[...VIDEOS, ...VIDEOS, ...VIDEOS]"
         :boolean_card_title="index == 0 ? true : false"
         string_card_title_1="関連"
         string_card_title_2=""
         string_card_title_3=""
         :boolean_detail = true
         :string_detail = "item[0].name"
-        string_detail_sub = "女優"
+        string_detail_sub = "(女優)"
       />
     </template>
 
@@ -61,7 +78,7 @@
         string_card_title_3=""
         :boolean_detail = true
         :string_detail = "item[0].name"
-        string_detail_sub = "タグ"
+        string_detail_sub = "(タグ)"
       />
     </template>
     

@@ -31,9 +31,9 @@ const route = useRoute();
 
 
 
-// const host_api = "http://192.168.179.22:8000/api"
+const host_api = "http://192.168.179.22:8000/api"
 
-const host_api = "https://adacolle.jp:8080/api"
+// const host_api = "https://adacolle.jp:8080/api"
 
 
 

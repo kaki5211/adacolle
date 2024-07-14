@@ -1,6 +1,6 @@
 <template>
     <v-card>
-      <v-container class="px-2 px-md-4">
+      <v-container class="px-0 px-md-4">
 
         <v-card v-if="boolean_card_title" class="text-center elevation-0 py-10">
           <h2 class="text-h5 text-md-h3 mx-auto mb-4 ">
@@ -12,59 +12,66 @@
         </v-card>
 
         <h2 v-if="boolean_detail" class="text-h7 text-md-h5 mx-auto mb-4 ">
-          <strong class="text-h6 text-md-h4">{{ string_detail }}</strong>（ {{ string_detail_sub }} ）
+          <strong class="text-h6 text-md-h4">{{ string_detail }}</strong> {{ string_detail_sub }} 
           <!-- {{ detail_performer.name }} -->
         </h2>
 
 
 
-    <div class="d-none d-xs-block">
-        <v-row>
-          <!-- ■■■■■■■■■■■■■■ -->
-          <!-- ■■■ Window ■■■-->
-          <!-- ■■■■■■■■■■■■■■ -->
-           
 
+        
+    <div class="px-md-2">
+        <v-row
+          :class="{'flex-nowarp': !boolean_detail_one,
+            'white-space': !boolean_detail_one,
+            'horizontal-scroll':!boolean_detail_one
+          }"
+        no-gutters>
+          <!-- ■■■■■■■■■■■■■■ -->
+          <!-- ■■■ Window ■■■ -->
+          <!-- ■■■■■■■■■■■■■■ -->
+          
                   <template
                   v-for="(ITEM, index) in my_card_list"
                   :key="index"
                   >
+
+                                      
                     <v-col
-                    :cols="boolean_detail ? 7 : boolean_detail_one ? 8 : 6"
-                    :sm="boolean_detail ? 5 : boolean_detail_one ? 6 : 4"
-                    :md="boolean_detail ? 3 : boolean_detail_one ? 6 : 4"
-                    class="pb-0"
-                    :class="{'mx-auto': boolean_detail_one}"
+                      :cols="boolean_detail ? boolean_detail_one ? 12 : 7 : 6"
+                      :sm="boolean_detail ? boolean_detail_one ? 6 : 5 : 4"
+                      :md="boolean_detail ? boolean_detail_one ? 6 : 3 : 4"
+                      class="pb-0 px-1 px-md-2"
+                      :class="{'mx-auto ml-md-0': boolean_detail_one}"
+                      style="flex-wrap: nowrap!important;"
                     >
                     <v-row no-gutters>
                       <v-col cols="12"
-                      class="rounded elevation-1"
-                      :class="boolean_detail ? 'rounded elevation-0' : ''"
+                      class="rounded elevation-2"
                       >
-                      <v-row no-gutters v-if="media[index]==true && kind==='video'" class="rounded-t">
-                        <v-col cols="12" class="my-auto aspect-ratio-block mx-auto rounded-t">
-                            <video controls class="w-100 my-auto px-0 my-auto rounded-t" playsinline autoplay muted>
-                              <source :src="ITEM.video_sumple_video" type="video/mp4">
-                              Your browser does not support the video tag.
-                            </video>
-                        </v-col>
-                      </v-row>
+                        <v-row no-gutters v-if="media[index]==true && kind==='video'" class="rounded-t">
+                          <v-col cols="12" class="my-auto aspect-ratio-block mx-auto rounded-t">
+                              <video controls class="w-100 my-auto px-0 my-auto rounded-t" playsinline autoplay muted>
+                                <source :src="ITEM.video_sumple_video" type="video/mp4">
+                                  Your browser does not support the video tag.
+                              </video>
+                          </v-col>
+                        </v-row>
                       <router-link
-                      :key="index"
+                        :key="index"
                         style="width: 100%; height: 100%; text-decoration: none; z-index: 1;"
                         :to="url(ITEM)"
-
-                      >                      
+                      >
                         <v-img
                           v-if="!media[index]"
-                          class="rounded-t aspect-ratio-block mx-auto"
-                          :class="boolean_detail ? 'rounded-b elevation-1' : ''"
+                          class="rounded-t aspect-ratio-block mx-auto elevation-0"
                           :src="imageSrc(ITEM)"
                           lazy-src="https://picsum.photos/id/11/100/60"
                           alt="Image"
                           :to="url(ITEM)"
                         >
                         <v-row v-if='kind==="video" && boolean_detail==false && boolean_detail_one==false' no-gutters
+                        class="d-none d-xs-block"
                         >
                           <v-col cols="12" class="d-flex rounded-1"
                             v-for="(item2,iiiu) in ITEM.video_performers"
@@ -103,16 +110,17 @@
 
 
 
-                      <v-row v-if='kind==="video" && boolean_detail==false' no-gutters>
+                      <v-row v-if='kind==="video"' no-gutters class="rounded-b">
                         <v-col cols="6" class="pa-0 my-0 my-fit-contdts d-flex">
                             <v-row no-gutters>
                               <v-btn
-                                class="my-fit-contents pa-0 ma-auto"
+                                class="my-fit-contents pa-0 ma-auto text-md-h6"
                                 color="primary"
                                 lazy-src="https://picsum.photos/id/11/100/60"
                                 prepend-icon="mdi-alpha-f"
                                 variant="text"
                                 block
+                                elevation="0"
                                 :loading="loading"
                                 @click="loading = !loading; handleButtonClick(ITEM.video_productnumber)"
                                 target="_blank"
@@ -130,12 +138,13 @@
                           <v-col cols="6" class="pa-0 my-0 my-fit-contdts d-flex">
                             <v-row no-gutters>
                               <v-btn
-                                class="my-fit-contents pa-0 ma-auto"
+                                class="my-fit-contents pa-0 ma-auto text-md-h6"
                                 color="primary"
                                 lazy-src="https://picsum.photos/id/11/100/60"
                                 prepend-icon="mdi-play-box"
-                                variant="text"
+                                variant=""
                                 block
+                                elevation="0"
                                 :loading="loading"
                                 @click="loading = !loading;toggleMedia(index)"
                               >
@@ -151,21 +160,26 @@
                       
 
                     </v-row>
-                    <div class="text-caption">
+                    <div class="text-caption text-md-h6"
+                    :class="{ 'text-h8': !boolean_detail_one && mdAndUp}"
+                    >
                       {{ postday(ITEM) }}
                     </div>
-                    <div class="text-h9">
+                    <v-btn class="text-sm-h9 text-md-h5"
+                    :class="{ 'text-h6': !boolean_detail_one && mdAndUp}"
+                    @click="copyText('コピーする文字列')"
+                    >
                       {{ title(ITEM) }}
-                    </div>
+                    </v-btn>
 
-                    <v-col v-if="boolean_detail_one" cols="" class="pa-0">
+                    <v-col v-if="boolean_detail_one" class="pa-0">
 
-                          <v-btn 
+                          <v-btn
                           v-for="(item, index_my_card) in my_card_list[0].video_performers"
                             :key="index_my_card"
                             elevation="1"
                             rounded="0"
-                            class="my-fit-contents text-caption ms-auto px-1"
+                            class="my-fit-contents text-caption ms-auto px-1 text-md-h6 mx-1 "
                             :prepend-icon="'mdi-account-circle'"
                             size="small"
                             exact
@@ -178,7 +192,7 @@
                             :key="index_my_card"
                             elevation="1"
                             rounded="0"
-                            class="my-fit-contents text-caption ms-auto px-1"
+                            class="my-fit-contents text-caption ms-auto px-1 text-md-h6 mx-1"
                             :prepend-icon="'mdi-tag-text-outline'"
                             size="small"
                             outlined
@@ -193,364 +207,66 @@
                         </v-col>                    
 
 
-                        <!-- function filter_account_list_name(item) {
-  if (props.kind === 'video') {
-    return item.name;
-  } else if (props.kind === 'article') {
-    return 'error';
-  } else {
-    return 'error';  // デフォルト
-  }
-} -->
+                    </v-col>
 
-                    <!-- <div class="text-right">
-                      <v-btnmy_card_list
-                        class="my-fit-contents my-underline"
-                        color="primary"
-                        elevation="0"
-                        size="small"
-                        variant="text"
-                        :to="url(ITEM)"
-                      >
-                      もっと見る...
-                    </v-btn>
-                  </div> -->
-
-
-                  </v-col>
-
-                  <v-divider v-if="(index+1) % 3 == 0" class="my-divider d-none d-md-block"></v-divider>
-                  <v-divider v-if="(index+1) % 2 == 0" class="my-divider d-md-none"></v-divider>
-                  <!-- <v-divider v-if="(index+1) % 3 == 0" class="my-divider"></v-divider> -->
-
-
-<v-divider vertical class=""></v-divider>
+                    <v-divider v-if="(index+1) % 3 == 0" class="my-divider d-none d-md-block"></v-divider>
+                    <v-divider v-if="(index+1) % 2 == 0" class="my-divider d-md-none"></v-divider>
+                    <!-- <v-divider v-if="(index+1) % 3 == 0" class="my-divider"></v-divider> -->
+                     
 
                 </template>
 
 
-        
+
+                <v-divider vertical v-if="boolean_detail_one && mdAndUp" class="my-divider my-1"></v-divider>
+                <v-divider v-if="boolean_detail_one && !mdAndUp" class="my-divider mt-5"></v-divider>
+
+                <!-- images -->
+                <template
+                v-if="boolean_detail_one && kind === 'video'"
+                  class="d-none d-xs-block"
+                >
+
+                    <!-- 右半分に画像をN行2列で配置 -->
+
+                    <v-col 
+                      :cols="boolean_detail ? boolean_detail_one ? 12 : 12 : 12"
+                      :sm="boolean_detail ? boolean_detail_one ? 6 : 6 : 6"
+                      :md="boolean_detail ? boolean_detail_one ? 6 : 6 : 6"
+                      class="my-5 px-1 px-md-2"
+                    >
+                      <v-row no-gutters>
+                        <v-col
+                          v-for="(image, index) in VIDEO_DETAIL_images(VIDEO_DETAIL.video_images)"
+                          :key="index"
+                          :cols="boolean_detail ? boolean_detail_one ? 6 : 7 : 6"
+                          :sm="boolean_detail ? boolean_detail_one ? 4 : 5 : 4"
+                          :md="boolean_detail ? boolean_detail_one ? 4 : 3 : 4"
+                          class="pa-1 pa-md-2"
+                        >
+                          <v-img
+                            class="rounded-t aspect-ratio-block"
+                            :src="image"
+                            lazy-src="https://picsum.photos/id/11/100/60"
+                            alt="Image"
+                          />
+                        </v-col>
+                      </v-row>
+                    </v-col>
+
+
+
+                </template>
+
+
+
+
         </v-row>
 </div>
 
 
+        <div v-if="boolean_detail_one" class=" my-14"></div>
 
-
-
-
-
-
-
-          <!-- ■■■■■■■■■■■■■■ -->
-          <!-- ■■■ Mobile ■■■-->
-          <!-- ■■■■■■■■■■■■■■ -->
-        <v-row
-          class="d-xs-none"
-        >
-                  <template
-                  v-for="(ITEM, index) in my_card_list"
-                  :key="index"
-                  >
-                  <v-col
-                    :cols="boolean_detail ? 9 : 8"
-                    :sm="boolean_detail ? 6 : 8"
-                    :md="boolean_detail ? 3 : 4"
-                    cols="8"
-                    xs="8"
-                    class="pr-1"
-                  >
-                  <v-row no-gutters>
-                      <v-col cols="12"
-                      class="rounded elevation-1"
-                      :class="boolean_detail ? 'rounded elevation-0' : ''"
-                      >
-                      <v-row no-gutters v-if="media[index]==true && kind==='video'" class="rounded-t">
-                        <v-col cols="12" class="my-auto aspect-ratio-block mx-auto rounded-t">
-                            <video controls class="w-100 my-auto px-0 my-auto rounded-t" playsinline autoplay muted>
-                              <source :src="ITEM.video_sumple_video" type="video/mp4">
-                              Your browser does not support the video tag.
-                            </video>
-                        </v-col>
-                      </v-row>
-                      <router-link
-                      :key="index"
-                        style="width: 100%; height: 100%; text-decoration: none; z-index: 1;"
-                        :to="url(ITEM)"
-
-                      >                      
-                        <v-img
-                          v-if="!media[index]"
-                          class="rounded-t aspect-ratio-block mx-auto"
-                          :class="boolean_detail ? 'rounded-b elevation-1' : ''"
-                          :src="imageSrc(ITEM)"
-                          lazy-src="https://picsum.photos/id/11/100/60"
-                          alt="Image"
-                          :to="url(ITEM)"
-                        >
-                        <v-row v-if='kind==="video" && boolean_detail==false' no-gutters>
-                          <!-- <v-col cols="12" class="d-flex rounded-1"
-                            v-for="(item2,iiiu) in ITEM.video_performers"
-                            :key="iiiu"
-                          >
-                            <v-btn 
-                              rounded="0"
-                              class="my-fit-contents text-caption ms-auto me-0 px-1 pl-2"
-                              :prepend-icon="'mdi-account-circle'"
-                              size="small"
-                              exact
-                              :to="kind === 'video' 
-                                ? { name: 'Video', query: { tag: '', performer: item2.name_eng } } 
-                                : kind === 'article' 
-                                ? { name: 'Article', query: { tag: '', performer: item2.name_eng } } 
-                                : ''"
-                              >
-                              {{item2.name}}
-                            </v-btn>
-                          </v-col> -->
-                
-                          <!-- <v-col cols="12" class="d-flex"
-                            v-for="(item2,iiiu) in ITEM.video_tags"
-                            :key="iiiu"
-                          >
-                            <v-btn 
-                              rounded="0"
-                              class="my-fit-contents text-caption ms-auto me-0 px-1 pl-2"
-                              :prepend-icon="'mdi-tag-text-outline'"
-                              size="small"
-                              exact
-                              :to="{ name: 'Video', query: { tag: item2.name_eng, performer: '' } }"
-                            >
-                              {{item2.name}}
-                            </v-btn>
-                          </v-col> -->
-                        </v-row>
-                      </v-img>
-                    </router-link>
-
-
-
-                      <v-row v-if='kind==="video" && boolean_detail==false' no-gutters>
-                        <v-col cols="6" class="pa-0 my-0 my-fit-contdts d-flex">
-                            <v-row no-gutters>
-                              <v-btn
-                                class="my-fit-contents pa-0 ma-auto"
-                                color="primary"
-                                lazy-src="https://picsum.photos/id/11/100/60"
-                                prepend-icon="mdi-alpha-f"
-                                variant="text"
-                                block
-                                :loading="loading"
-                                @click="loading = !loading; handleButtonClick(ITEM.video_productnumber)"
-                                target="_blank"
-                              >
-                                FANZA
-                                <template v-slot:loader>
-                                  <v-progress-linear indeterminate></v-progress-linear>
-                                </template>
-                              </v-btn>
-                            </v-row>
-                          </v-col>
-
-                          <v-divider vertical class=""></v-divider>
-
-                          <v-col cols="6" class="pa-0 my-0 my-fit-contdts d-flex">
-                            <v-row no-gutters>
-                              <v-btn
-                                class="my-fit-contents pa-0 ma-auto"
-                                color="primary"
-                                lazy-src="https://picsum.photos/id/11/100/60"
-                                prepend-icon="mdi-play-box"
-                                variant="text"
-                                block
-                                :loading="loading"
-                                @click="loading = !loading;toggleMedia(index)"
-                              >
-                                {{ media[index] ? '閉じる' : '再生' }}
-                                <template v-slot:loader>
-                                  <v-progress-linear indeterminate></v-progress-linear>
-                                </template>
-                              </v-btn>
-                            </v-row>
-                          </v-col>
-                        </v-row>
-                      </v-col>
-                      
-
-                    </v-row>
-
-
-
-                  </v-col>
-
-
-                  <v-col
-                    :cols="boolean_detail ? 7 : 4"
-                    :sm="boolean_detail ? 5 : 4"
-                    :md="boolean_detail ? 3 : 4"
-                    class="pb-0"
-                    >
-
-                    <div class="pa-0">
-                      <div class="text-left">
-                        <div class="text-caption">
-                          {{ postday(ITEM) }}
-                        </div>
-                        <div class="text-h9">
-                          {{ title(ITEM) }}
-                        </div>
-              
-                        
-                        <v-col cols="" class="pa-0">
-                          <v-btn 
-                          v-for="(item,iii) in ITEM.video_performers"
-                                    :key="iii"
-
-                            elevation="1"
-                            rounded="0"
-                            class="my-fit-contents text-caption ms-auto px-1"
-                            size="small"
-                            
-                            >
-                            {{item.name}}
-                          </v-btn>
-
-                          <v-btn 
-                          v-for="(item,iii) in ITEM.video_tags"
-                                    :key="iii"
-
-                            elevation="1"
-                            rounded="0"
-                            class="my-fit-contents text-caption ms-auto px-1"
-                            size="small"
-                            
-                            >
-                            {{item.name}}
-                          </v-btn>
-
-                          <!-- <div class="text-right">
-                            <v-btn
-                              class="my-fit-contents my-underline"
-                              color="primary"
-                              elevation="0"
-                              size="small"
-                              variant="text"
-                              :to="url(ITEM)"
-                              >
-                            もっと見る...
-                          </v-btn>
-
-                          </div> -->
-
-
-                        </v-col>
-
-
-                      </div>
-                    </div>
-
-
-                  </v-col>
-                  <v-divider></v-divider>
-        </template>
-
-
-
-
-
-  
-          <!-- <v-col
-            cols="12"
-            md="4"
-            v-for="item in [3,4,5,6]"
-            :key="item"
-          >
-            <v-img
-              class="rounded elevation-5"
-              height="200"
-              gradient="#262626, #262626"
-            />
-  
-            <div class="pa-5">
-              <div class="text-h5 mb-2">
-                Optimizing User Interfaces with Vuetify
-              </div>
-  
-              <div class="text-caption mb-5">
-                December 4, 2023
-              </div>
-  
-              <v-btn
-                color="black"
-                elevation="0"
-                variant="outlined"
-                rounded
-                size="large"
-                text="もっと見る..."
-                width="128"
-              />
-  
-            </div>
-          </v-col> -->
-  
-  
-        </v-row>
-
-        <v-divider v-if="boolean_detail_one" class="my-divider my-14"></v-divider>
-
-        <!-- images -->
-        <div
-        v-if="boolean_detail_one && kind === 'video'"
-          class="d-none d-xs-block"
-        >
-          <v-row
-          >
-            <v-col
-            v-for="(image,iiii) in VIDEO_DETAIL_images(VIDEO_DETAIL.video_images)"
-                :key="iiii"
-
-              class="mx-auto "
-              cols="4"
-              md="3"
-            >
-              <v-img
-                class="rounded-t aspect-ratio-block mx-auto"
-                :src=image
-                lazy-src="https://picsum.photos/id/11/100/60"
-                alt="Image"
-              >
-              </v-img>
-
-            </v-col>
-          </v-row>
-        </div>
-
-
-        <!-- Mobile -->
-        <v-row
-          class="d-xs-none px-3"
-          v-if="boolean_detail_one && kind === 'video'"
-        >
-          <v-col
-          v-for="(image,iiii_mob) in VIDEO_DETAIL_images(VIDEO_DETAIL.video_images)"
-              :key="iiii_mob"
-
-          class="mx-auto px-2"
-          cols="6"
-          md="6"
-          >
-              <v-img
-                class="rounded-t aspect-ratio-block mx-auto"
-                :src=image
-                lazy-src="https://picsum.photos/id/11/100/60"
-                alt="Image"
-              >
-              </v-img>
-            </v-col>
-          </v-row>
-        <!-- images end -->
-
-
-        
       </v-container>
     </v-card>
   </template>
@@ -574,6 +290,11 @@ const route = useRoute();
 const TableargetvideoProductNumber  = route.params.video_productnumber;
 const VIDEO_DETAIL = computed(() => { return VIDEOS.value.find(item => item.video_productnumber === TableargetvideoProductNumber); });
 
+import { useDisplay } from 'vuetify';
+const { mdAndUp } = useDisplay();
+const mdup = computed(() => mdAndUp.value);
+
+
 
 // 
 import { watch } from 'vue'
@@ -585,6 +306,10 @@ watch(loading, (val) => {
 
   setTimeout(() => (loading.value = false), 100)
 })
+
+
+
+
 
 
 
@@ -806,6 +531,17 @@ function url_account_video_or_article(item) {
   }
 }
 
+const copyText = (text) => {
+  navigator.clipboard.writeText(text).then(() => {
+    console.log('Text copied to clipboard');
+    // 通知やアラートを表示する場合
+    alert('クリップボードにコピーしました！');
+  }).catch(err => {
+    console.error('Failed to copy text: ', err);
+  });
+};
+
+
 
 
 </script>
@@ -877,6 +613,19 @@ function url_account_video_or_article(item) {
 
 .my-underline {
   text-decoration: underline;
+}
+
+
+.horizontal-scroll {
+  display: flex;
+  overflow-x: scroll;  
+}
+.flex-nowarp {
+  flex-wrap: nowrap;
+}
+
+.white-space-nowrap{
+  white-space: nowrap;
 }
 
 </style>
