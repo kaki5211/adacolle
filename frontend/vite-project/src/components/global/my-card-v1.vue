@@ -22,9 +22,9 @@
         
     <div class="px-md-2">
         <v-row
-          :class="{'flex-nowarp': !boolean_detail_one,
-            'white-space': !boolean_detail_one,
-            'horizontal-scroll':!boolean_detail_one
+          :class="{'flex-nowarp': !boolean_detail && boolean_detail_one,
+            'white-space': !boolean_detail && boolean_detail_one,
+            'horizontal-scroll':!boolean_detail && boolean_detail_one
           }"
         no-gutters>
           <!-- ■■■■■■■■■■■■■■ -->
@@ -165,12 +165,39 @@
                     >
                       {{ postday(ITEM) }}
                     </div>
-                    <v-btn class="text-sm-h9 text-md-h5"
-                    :class="{ 'text-h6': !boolean_detail_one && mdAndUp}"
-                    @click="copyText('コピーする文字列')"
-                    >
-                      {{ title(ITEM) }}
-                    </v-btn>
+
+
+
+
+                    <v-tooltip :text=ITEM.video_productnumber>
+                      <template v-slot:activator="{ props }">
+                        <v-btn
+                          v-bind="props"
+                          class="text-sm-h9 text-md-h5"
+                          :class="{ 'text-h6': !boolean_detail_one && mdAndUp}"
+                          @click="snackbar = true;copyToClipboard('コピーするテキスト')"
+                          >
+                            {{ title(ITEM) }}
+                          </v-btn>
+                          
+                          <v-snackbar
+                            v-model="snackbar"
+                            timeout="2000"
+                          >
+                          {{ 'コピーしました。' + ITEM.video_productnumber }}
+                            <template v-slot:actions>
+                              <v-btn
+                                color="blue"
+                                variant="text"
+                                @click="snackbar = false"
+                              >
+                                Close
+                              </v-btn>
+                            </template>
+                          </v-snackbar>
+                                              </template>
+                    </v-tooltip>
+
 
                     <v-col v-if="boolean_detail_one" class="pa-0">
 
@@ -531,15 +558,38 @@ function url_account_video_or_article(item) {
   }
 }
 
-const copyText = (text) => {
+// クリップボードコピー-----------------
+// データの定義
+const snackbar = ref(false);
+const ITEM = {
+  video_productnumber: '12345678'
+};
+const booleanDetailOne = ref(false);
+
+// メソッドの定義
+const title_cp = (item) => {
+  return `Item Title: ${item.video_productnumber}`;
+};
+
+const handleButtonClick_cp = (text) => {
+  copyToClipboard(text);
+  snackbar.value = true;
+};
+
+const copyToClipboard = (text) => {
   navigator.clipboard.writeText(text).then(() => {
-    console.log('Text copied to clipboard');
-    // 通知やアラートを表示する場合
-    alert('クリップボードにコピーしました！');
+    console.log('クリップボードにコピーしました:', text);
   }).catch(err => {
-    console.error('Failed to copy text: ', err);
+    console.error('クリップボードへのコピーに失敗しました:', err);
   });
 };
+
+
+
+
+
+
+
 
 
 
