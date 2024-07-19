@@ -380,8 +380,6 @@
       </v-row>
     </v-container>
   </v-card>
-  {{ ARTICLE_LIST_FILTERED }}
-  {{ searchparams }}
 </template>
 
 <script lang="ts" setup>

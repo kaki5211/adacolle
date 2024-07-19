@@ -15,6 +15,87 @@
           </div>
 
         </v-card>
+
+
+
+      <v-row no-gutters >
+        <v-col
+        :key="key" v-for="(value, key) in article_detail_explain"
+        cols="12"
+        sm="12"
+        md="6"
+        lg="4"
+        >
+      <!-- 素材セクション -->
+        <v-card class="mb-4">
+          <v-card-title v-if="ARTICLE_DETAIL_OPTIONS_SEARCH_LIST">
+            {{ ARTICLE_DETAIL.article_options[key] }}
+          </v-card-title>
+          <!-- <v-btn @click="updateSearchParams(searchparams, value, key)" :color="searchparams[key].includes(value) ? 'primary' : 'secondary'">
+            {{ searchparams[key].includes(value) ? 'ON' : 'OFF' }}a
+          </v-btn>           -->
+          <v-card-text>
+            <v-list dense>
+              <v-list-item v-for="(value2, key2) in value" :key="key2">
+
+                <v-chip-group
+                                  column
+                                  color="text-deep-purple-accent-4"
+                                >
+                                <v-chip
+                                    size="small"
+                                    filter-icon="mdi-checkbox-marked"
+                                    :value="key2"
+                                    color=""
+                                    @click="updateSelection(key, key2)"
+                                    class="custom-chip-style"
+
+                                  >
+                                    <v-icon v-if="true">
+                                      {{ ARTICLE_DETAIL_OPTIONS_SEARCH_LIST[key].includes(key2) ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline' }}
+                                    </v-icon>
+
+                                  </v-chip>
+
+                <v-list-item-content>
+                  <div class="d-flex">
+                    <v-list-item-title>{{ key2 }}</v-list-item-title>
+                    <!-- <v-switch
+                    @click="updateSearchParams(searchparams, key2, key)"
+                    :color="searchparams[key].includes(key2) ? 'primary' : 'secondary'"
+                    :label="searchparams[key].includes(key2) ? 'ON' : 'OFF'"
+                    >
+                      {{ searchparams[key].includes(value) ? 'ON' : 'OFF' }}
+                    </v-switch>  -->
+
+
+
+
+                  <!-- <v-col cols="6">
+                    <v-switch
+                      :model-value="false"
+                      color="primary"
+                      label="off"
+                    ></v-switch>
+                  </v-col>                     -->
+                    
+                  </div>
+                  <v-list-item-subtitle class="pl-5">{{ value2 }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-chip-group>
+
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+        </v-card>
+
+
+
+        </v-col>
+
+      </v-row>
+
+
     <div
       class="d-none d-xs-block"
     >
@@ -128,83 +209,7 @@
         </v-row>
 
 
-      <v-row>
-        <template :key="key" v-for="(value, key) in article_detail_explain">
-        <v-col
-        col="12"
-        sm="12"
-        md="6"
-        lg="4"
-        >
-      <!-- 素材セクション -->
-        <v-card class="mb-4">
-          <v-card-title v-if="ARTICLE_DETAIL_OPTIONS_SEARCH_LIST">
-            {{ ARTICLE_DETAIL.article_options[key] }}
-          </v-card-title>
-          <!-- <v-btn @click="updateSearchParams(searchparams, value, key)" :color="searchparams[key].includes(value) ? 'primary' : 'secondary'">
-            {{ searchparams[key].includes(value) ? 'ON' : 'OFF' }}a
-          </v-btn>           -->
-          <v-card-text>
-            <v-list dense>
-              <v-list-item v-for="(value2, key2) in value" :key="key2">
 
-                <v-chip-group
-                                  column
-                                  color="text-deep-purple-accent-4"
-                                >
-                                <v-chip
-                                    size="small"
-                                    filter-icon="mdi-checkbox-marked"
-                                    :value="key2"
-                                    color=""
-                                    @click="updateSelection(key, key2)"
-                                    class="custom-chip-style"
-
-                                  >
-                                    <v-icon v-if="true">
-                                      {{ ARTICLE_DETAIL_OPTIONS_SEARCH_LIST[key].includes(key2) ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline' }}
-                                    </v-icon>
-
-                                  </v-chip>
-
-                <v-list-item-content>
-                  <div class="d-flex">
-                    <v-list-item-title>{{ key2 }}</v-list-item-title>
-                    <!-- <v-switch
-                    @click="updateSearchParams(searchparams, key2, key)"
-                    :color="searchparams[key].includes(key2) ? 'primary' : 'secondary'"
-                    :label="searchparams[key].includes(key2) ? 'ON' : 'OFF'"
-                    >
-                      {{ searchparams[key].includes(value) ? 'ON' : 'OFF' }}
-                    </v-switch>  -->
-
-
-
-
-                  <!-- <v-col cols="6">
-                    <v-switch
-                      :model-value="false"
-                      color="primary"
-                      label="off"
-                    ></v-switch>
-                  </v-col>                     -->
-                    
-                  </div>
-                  <v-list-item-subtitle class="pl-5">{{ value2 }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-chip-group>
-
-              </v-list-item>
-            </v-list>
-          </v-card-text>
-        </v-card>
-
-
-
-        </v-col>
-      </template>
-
-      </v-row>
 
 
 

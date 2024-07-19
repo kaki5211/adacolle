@@ -22,15 +22,15 @@
         
     <div class="px-md-2">
         <v-row
-          :class="{'flex-nowarp': !boolean_detail && boolean_detail_one,
-            'white-space': !boolean_detail && boolean_detail_one,
-            'horizontal-scroll':!boolean_detail && boolean_detail_one
+          :class="{'flex-nowarp': boolean_detail && !boolean_detail_one,
+            'white-space': boolean_detail && !boolean_detail_one,
+            'horizontal-scroll':boolean_detail && !boolean_detail_one
           }"
         no-gutters>
           <!-- ■■■■■■■■■■■■■■ -->
           <!-- ■■■ Window ■■■ -->
           <!-- ■■■■■■■■■■■■■■ -->
-          
+
                   <template
                   v-for="(ITEM, index) in my_card_list"
                   :key="index"
@@ -62,6 +62,7 @@
                         style="width: 100%; height: 100%; text-decoration: none; z-index: 1;"
                         :to="url(ITEM)"
                       >
+
                         <v-img
                           v-if="!media[index]"
                           class="rounded-t aspect-ratio-block mx-auto elevation-0"
@@ -93,7 +94,7 @@
                             v-for="(item2,iiiu) in ITEM.video_tags"
                             :key="iiiu"
                           >
-                            <v-btn 
+                            <v-btn
                               rounded="0"
                               class="my-fit-contents text-caption ms-auto me-0 px-1 pl-2"
                               :prepend-icon="'mdi-tag-text-outline'"
@@ -171,16 +172,19 @@
 
                     <v-tooltip :text=ITEM.video_productnumber>
                       <template v-slot:activator="{ props }">
-                        <v-btn
+                        <div
+                          variant="text"
                           v-bind="props"
-                          class="text-sm-h9 text-md-h5"
+                          class="text-sm-h9 text-md-h5 ml-0 mr-auto px-0"
                           :class="{ 'text-h6': !boolean_detail_one && mdAndUp}"
-                          @click="snackbar = true;copyToClipboard('コピーするテキスト')"
+                          @click="snackbar = true;copyToClipboard(ITEM.video_productnumber)"
+                          style="justify-content: flex-start; white-space: pre-wrap;"
                           >
                             {{ title(ITEM) }}
-                          </v-btn>
+                          </div>
                           
                           <v-snackbar
+                            v-if="kind === 'video'"
                             v-model="snackbar"
                             timeout="2000"
                           >
@@ -195,11 +199,13 @@
                               </v-btn>
                             </template>
                           </v-snackbar>
-                                              </template>
+                      </template>
                     </v-tooltip>
 
 
-                    <v-col v-if="boolean_detail_one" class="pa-0">
+                    <v-col v-if="true" class="pa-0">
+
+                      <template v-if="kind === 'video'">
 
                           <v-btn
                           v-for="(item, index_my_card) in my_card_list[0].video_performers"
@@ -214,6 +220,7 @@
                             >
                             {{ filter_account_list_name(item) }}
                           </v-btn>
+                      </template>
                           <v-btn 
                           v-for="(item,index_my_card) in video_or_article_tag_list(my_card_list[0])"
                             :key="index_my_card"
@@ -229,12 +236,52 @@
                             {{ filter_tag_list_name(item) }}
 
                           </v-btn>
-
-
-                        </v-col>                    
-
-
+                        </v-col>
                     </v-col>
+
+
+                    <!-- 広告 BTN -->
+                    <v-row v-if="boolean_detail_one_article" class="pa-10">
+                      
+                      <v-col cols="6">
+
+                        <v-btn 
+                          v-for="(item,index_my_card) in video_or_article_tag_list(my_card_list[0])"
+                          :key="index_my_card"
+                          elevation="1"
+                          rounded="0"
+                          class="my-fit-contents text-caption ms-auto px-1 text-md-h6 mx-1"
+                          :prepend-icon="'mdi-tag-text-outline'"
+                          size="small"
+                          outlined
+                          :to=url_tag_video_or_article(item)
+                        >
+                          
+                          {{ filter_tag_list_name(item) }}
+                        </v-btn>
+                      </v-col>
+                      
+                      <v-col cols="6">
+                        <v-btn 
+                          v-for="(item,index_my_card) in video_or_article_tag_list(my_card_list[0])"
+                          :key="index_my_card"
+                          elevation="1"
+                          rounded="0"
+                          class="my-fit-contents text-caption ms-auto px-1 text-md-h6 mx-1"
+                          :prepend-icon="'mdi-tag-text-outline'"
+                          size="small"
+                          outlined
+                          :to=url_tag_video_or_article(item)
+                        >
+                          
+                          {{ filter_tag_list_name(item) }}
+                        </v-btn>
+                      </v-col>      
+                    </v-row>
+
+
+
+
 
                     <v-divider v-if="(index+1) % 3 == 0" class="my-divider d-none d-md-block"></v-divider>
                     <v-divider v-if="(index+1) % 2 == 0" class="my-divider d-md-none"></v-divider>
@@ -247,6 +294,7 @@
 
                 <v-divider vertical v-if="boolean_detail_one && mdAndUp" class="my-divider my-1"></v-divider>
                 <v-divider v-if="boolean_detail_one && !mdAndUp" class="my-divider mt-5"></v-divider>
+
 
                 <!-- images -->
                 <template
@@ -352,6 +400,7 @@ const props = defineProps({
   string_detail: { type: String},
   string_detail_sub: { type: String},
   boolean_detail_one: { type: Boolean},
+  boolean_detail_one_article: { type: Boolean},
 
   // item: { type: Object},
   // item: { type: Object, required: true},
@@ -379,7 +428,7 @@ function imageSrc(item) {
   if (props.kind === 'video') {
     return item.video_image;
   } else if (props.kind === 'article') {
-    return item.article_image;
+    return item.article_childlen[0].article_child_options.image;
   } else {
     return 'default_image_path.jpg';  // デフォルト
   }
@@ -567,14 +616,6 @@ const ITEM = {
 const booleanDetailOne = ref(false);
 
 // メソッドの定義
-const title_cp = (item) => {
-  return `Item Title: ${item.video_productnumber}`;
-};
-
-const handleButtonClick_cp = (text) => {
-  copyToClipboard(text);
-  snackbar.value = true;
-};
 
 const copyToClipboard = (text) => {
   navigator.clipboard.writeText(text).then(() => {

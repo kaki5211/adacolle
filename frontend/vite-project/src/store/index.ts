@@ -31,9 +31,9 @@ const route = useRoute();
 
 
 
-// const host_api = "http://192.168.179.22:8000/api"
+const host_api = "http://192.168.179.22:8000/api"
 
-const host_api = "https://adacolle.jp:8080/api"
+// const host_api = "https://adacolle.jp:8080/api"
 
 
 
@@ -203,6 +203,16 @@ const store = createStore({
     async FETCH_GET_VIDEOS_FILTERED({ commit, state }) {
       const tags = state.searchparams_video.tags;
       const performers = state.searchparams_video.performers;
+
+          // 値が入るまでポーリング
+        const pollForArticleList = async () => {
+          while (!state.videos || state.videos.length === 0) {
+              await new Promise(resolve => setTimeout(resolve, 100)); // 100ミリ秒ごとにチェック
+          }
+        };
+
+        await pollForArticleList();
+
       const VIDEOS = state.videos;
 
       // 両方の条件が空の場合はすべてのビデオを返す
@@ -264,15 +274,26 @@ const store = createStore({
     async FETCH_GET_ARTICLE_LIST_FILTERED({ commit, state }, article_list__filtered) {
 
         const tags = state.searchparams_article.tags;
+
+          // 値が入るまでポーリング
+          const pollForArticleList = async () => {
+            while (!state.article_list || state.article_list.length === 0) {
+                await new Promise(resolve => setTimeout(resolve, 100)); // 100ミリ秒ごとにチェック
+            }
+        };
+
+        await pollForArticleList();
+
         const ARTICLE_LIST = state.article_list;
+
+      
 
         // 両方の条件が空の場合はすべてのビデオを返す
         if (tags.length === 0) {
           commit('SET_ARTICLE_LIST_FILTERED', ARTICLE_LIST);
+
           return
         }
-        console.log("tagstagstags", tags)
-        console.log("ARTICLE_LISTARTICLE_LIST", ARTICLE_LIST)
 
         // タグでフィルタリング
         let temp = ARTICLE_LIST.filter(article => {
@@ -281,7 +302,6 @@ const store = createStore({
           return tags.length === 0 || tags.every(tag => article_tags_list.includes(tag));
         });
             
-        console.log("temptemptemp", temp)
         // storeに登録
         commit('SET_ARTICLE_LIST_FILTERED', temp);
 

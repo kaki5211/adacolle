@@ -262,10 +262,12 @@ const routes = [
           // videos が取得されるまで待機
           const productNumber = to.params.article_title_eng;
           console.log("productNumber", productNumber)
-          const videoProductNumbers = articles.value.map(item => item.article_title_eng)
+          const ARTICLE_DETAIL = articles.value.map(item => item.article_title_eng)
 
           // videos が取得されるまで待機
-          if (videoProductNumbers.includes(productNumber)) {
+          if (ARTICLE_DETAIL.includes(productNumber)) {
+            store.commit('SET_ARTICLE_DETAIL', ARTICLE_DETAIL);
+
             next()
           } else {
             next()

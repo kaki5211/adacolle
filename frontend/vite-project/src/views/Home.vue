@@ -30,8 +30,16 @@
 
     <!-- <div class="py-1" /> -->
 
-    <BlogMyV1 />
+    <MyCardV1
+      kind="article"
+      :my_card_list="ARTICLE_LIST"
+      :boolean_card_title="true"
+      string_card_title_1="ランダムピックアップ"
+      string_card_title_2=""
+      string_card_title_3="&nbsp;"
+      :boolean_detail = false
 
+    />
     <div class="py-1" />
 
     <!-- <TestimonialV2 /> -->
@@ -69,4 +77,14 @@ import TestimonialV2 from '@/components/testimonial/Testimonial-v2.vue'
 
 import TitleMyV2 from '@/components/title/Title-My-v2.vue'
 import TitleMyV5 from '@/components/title/Title-My-v5.vue'
+
+import MyCardV1 from '@/components/global/my-card-v1.vue'
+
+
+import { useStore } from 'vuex';
+import { computed, ref } from 'vue';
+
+const store = useStore();
+
+const ARTICLE_LIST = computed(() => { return store.getters.GET_ARTICLE_LIST; });
 </script>

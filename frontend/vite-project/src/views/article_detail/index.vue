@@ -3,19 +3,50 @@
 
 
     
-    <h1>Testimonials</h1>
+    <!-- <h1>Testimonials</h1> -->
 
 
 
-    <ArticleDetailV1 />
+    <!-- <ArticleDetailV1 /> -->
+    <!-- <MyCardV1
+        :kind="kind"
+        :my_card_list="[ARTICLE_DETAIL]"
+        :boolean_card_title="1 == -1 ? true : false"
+        string_card_title_1="関連"
+        string_card_title_2=""
+        string_card_title_3=""
+        :boolean_detail = true
+        string_detail = ""
+        string_detail_sub = ""
+        :boolean_detail_one = true
+      /> -->
+
 
     <div class="py-1" />
 
-    <!-- <ArticleDetailV3 /> -->
+    <ArticleDetailV3 />
     
     <div class="py-1" />
 
     <!-- <ArticleDetailV2 /> -->
+
+    <MyCardV1
+      :kind="kind"
+      :my_card_list="ARTICLE_LIST"
+      :boolean_card_title="1 == 1 ? true : false"
+      string_card_title_1="一覧"
+      string_card_title_2=""
+      string_card_title_3=""
+      :boolean_detail = true
+      string_detail = ""
+      string_detail_sub = ""
+      :boolean_detail_one = true
+      :boolean_detail_one_article = true
+
+    />
+
+    <div class="py-1" />
+
 
     <template v-for="(item, index) in connection_tags"
      :key="index"
@@ -23,13 +54,13 @@
       <MyCardV1
         :kind="kind"
         :my_card_list="ARTICLE_LIST"
-        :boolean_card_title="index == -1 ? true : false"
+        :boolean_card_title="index == 0 ? true : false"
         string_card_title_1="関連"
         string_card_title_2=""
         string_card_title_3=""
         :boolean_detail = true
-        :string_detail = "item[0].name"
-        string_detail_sub = "タグ"
+        :string_detail = "item[0].article_tag_name"
+        string_detail_sub = ""
       />
     </template>
 
@@ -40,7 +71,8 @@
 <script lang="ts" setup>
 import ArticleDetailV1 from '@/components/article_detail/ArticleDetail-v1.vue'
 // import ArticleDetailV2 from '@/components/article_detail/ArticleDetail-v2.vue'
-// import ArticleDetailV3 from '@/components/article_detail/ArticleDetail-v3.vue'
+import ArticleDetailV3 from '@/components/article_detail/ArticleDetail-v3.vue'
+import MyCardV1 from '@/components/global/my-card-v1.vue'
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
@@ -61,6 +93,7 @@ const kind = "article"
 
 const connection_tags = computed(() => {
   let result = [];
+  let flag = 0;
   for (const article_detail_tag of ARTICLE_DETAIL.value.article_tags) {
 
      // VIDEOS のvideo_tags.nameをリストで取得
@@ -69,8 +102,12 @@ const connection_tags = computed(() => {
         if (article_tag.article_tag_name_eng === article_detail_tag.article_tag_name_eng) {
 
           result.push([article_detail_tag, articles_article]);
+          flag = 1;
           break; // パフォーマーが見つかったらループを抜ける
         }
+      }
+      if(flag==1){
+        break;
       }
     }
   }

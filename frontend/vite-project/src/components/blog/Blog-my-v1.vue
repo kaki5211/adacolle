@@ -23,7 +23,9 @@
             class="rounded elevation-5"
             height="200"
             gradient="#262626, #262626"
+            :src="item.article_childlen[0].article_child_options.image"
           />
+          {{ item.article_childlen[0].article_child_options.image }}
 
           <div class="pa-5">
             <div class="text-left">
