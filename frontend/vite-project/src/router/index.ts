@@ -487,8 +487,8 @@ router.beforeEach((to, from, next) => {
 
   const nearestWithMeta = to.matched.slice().reverse().find(r => r.meta && r.meta.metaTags);
 
-  const site_name = "サイト名";
-  const site_name_sub = "- サイト簡単に説明文 -";
+  const site_name = "アダコレ";
+  const site_name_sub = "- アダルトな情報を一括収集するサイト -";
 
   const site_title = "ホーム";
 

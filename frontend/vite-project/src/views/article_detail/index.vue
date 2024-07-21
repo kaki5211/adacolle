@@ -4,11 +4,11 @@
 
     
 
-    <MyTitleV1
+    <!-- <MyTitleV1
       :string_card_title_1="ARTICLE_DETAIL.article_title"
       string_card_title_2=""
       string_card_title_3=""
-    />    
+    />     -->
 
     <!-- <ArticleDetailV1 /> -->
     <!-- <MyCardV1

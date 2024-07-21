@@ -26,6 +26,7 @@
         md="6"
         lg="4"
         >
+        {{ ARTICLE_DETAIL_OPTIONS_SEARCH_LIST }}
       <!-- 素材セクション -->
         <v-card class="mb-4">
           <v-card-title v-if="ARTICLE_DETAIL_OPTIONS_SEARCH_LIST">
@@ -47,17 +48,18 @@
                                     filter-icon="mdi-checkbox-marked"
                                     :value="key2"
                                     color=""
-                                    @click="updateSelection(key, key2)"
+                                    @click="updateSelection(key, key2); updateFilteredOptions();"
                                     class="custom-chip-style"
 
                                   >
                                     <v-icon v-if="true">
+                                      
                                       {{ ARTICLE_DETAIL_OPTIONS_SEARCH_LIST[key].includes(key2) ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline' }}
                                     </v-icon>
 
                                   </v-chip>
 
-                <v-list-item-content>
+                <v-list-item>
                   <div class="d-flex">
                     <v-list-item-title>{{ key2 }}</v-list-item-title>
                     <!-- <v-switch
@@ -81,7 +83,7 @@
                     
                   </div>
                   <v-list-item-subtitle class="pl-5">{{ value2 }}</v-list-item-subtitle>
-                </v-list-item-content>
+                </v-list-item>
               </v-chip-group>
 
               </v-list-item>
@@ -94,7 +96,6 @@
         </v-col>
 
       </v-row>
-
 
     <div
       class=""
@@ -170,7 +171,7 @@
   
 <script lang="ts" setup>
 import { useStore } from 'vuex';
-import { computed, ref } from 'vue';
+import { computed, ref, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -185,39 +186,48 @@ const targetarticleinfo  = route.params.article_title_eng;
 const ARTICLE_DETAIL = computed(() => { return ARTICLE_LIST.value.find(item => item.article_title_eng === targetarticleinfo); });
 
 
-const ARTICLE_DETAIL_OPTIONS_SEARCH_LIST = computed(() => { 
-  let result = {};
-  for (const [key, value] of Object.entries(JSON.parse(ARTICLE_DETAIL.value.article_options_explain))) {
-    result[key] = [];  // 初期値として空の配列をセット
-  }
-  store.commit('SET_ARTICLE_DETAIL_OPTIONS_SEARCH_LIST', result);
-  return result; 
-});
+const ARTICLE_DETAIL_OPTIONS_SEARCH_LIST = reactive({});
+for (const [key, value] of Object.entries(JSON.parse(ARTICLE_DETAIL.value.article_options_explain))) {
+  ARTICLE_DETAIL_OPTIONS_SEARCH_LIST[key] = [];
+}
 
-store.commit('SET_ARTICLE_DETAIL_OPTIONS_FILTERED', ARTICLE_DETAIL.value);
+
+const updateSelection = (key, key2) => {
+  if (!ARTICLE_DETAIL_OPTIONS_SEARCH_LIST[key]) {
+    ARTICLE_DETAIL_OPTIONS_SEARCH_LIST[key] = [];
+  }
+  const index = ARTICLE_DETAIL_OPTIONS_SEARCH_LIST[key].indexOf(key2);
+  if (index === -1) {
+    ARTICLE_DETAIL_OPTIONS_SEARCH_LIST[key].push(key2);
+  } else {
+    ARTICLE_DETAIL_OPTIONS_SEARCH_LIST[key].splice(index, 1);
+  }
+
+  // フィルタリングされたオプションを更新
+  updateFilteredOptions();
+};
 
 const ARTICLE_DETAIL_OPTIONS_FILTERED = computed(() => {
   let temp = cloneDeep(ARTICLE_DETAIL.value);
-  // searchparams.valueが定義されるまで待つ
-  for (const [key, values] of Object.entries(ARTICLE_DETAIL_OPTIONS_SEARCH_LIST.value)) {
-    if (values.length === 0) {
-    continue; // values が空の場合、次のループへ
-  }
+
+  for (const [key, values] of Object.entries(ARTICLE_DETAIL_OPTIONS_SEARCH_LIST)) {
     if (values.length > 0) {
       temp.article_childlen = temp.article_childlen.filter(item => {
-      return values.includes(item.article_child_options[key]);
-    });
+        return values.includes(item.article_child_options[key]);
+      });
     }
   }
-  // return  temp
 
-  store.commit('SET_ARTICLE_DETAIL_OPTIONS_FILTERED', temp);
-  return  temp
-
-  // return  store.getters.GET_ARTICLE_DETAIL_OPTIONS_FILTERED
+  return temp;
 });
 
+const updateFilteredOptions = () => {
+  const filteredOptions = ARTICLE_DETAIL_OPTIONS_FILTERED.value;
+  store.commit('SET_ARTICLE_DETAIL_OPTIONS_FILTERED', filteredOptions);
+};
 
+// 初期化時にフィルタリングされたオプションを設定
+updateFilteredOptions();
 
 
 
@@ -379,23 +389,6 @@ function resetSearchParams(searchparams, kind) {
     searchparams[kind] = []; // 指定されたキーを空の配列にリセット
   }
 }
-
-
-
-const updateSelection = (key, key2) => {
-  if (!ARTICLE_DETAIL_OPTIONS_SEARCH_LIST.value[key]) {
-    ARTICLE_DETAIL_OPTIONS_SEARCH_LIST.value[key] = [];
-  }
-  const index = ARTICLE_DETAIL_OPTIONS_SEARCH_LIST.value[key].indexOf(key2);
-  if (index === -1) {
-    ARTICLE_DETAIL_OPTIONS_SEARCH_LIST.value[key].push(key2);
-  } else {
-    ARTICLE_DETAIL_OPTIONS_SEARCH_LIST.value[key].splice(index, 1);
-  }
-};
-
-
-
 
 
 
