@@ -31,21 +31,23 @@ const route = useRoute();
 // http://localhost:8000/api/your-endpoint/
 
 
+function getApiHost() {
+  const hostname = window.location.hostname;
+  console.log("Hostname:", hostname);
 
-const isWindows = navigator.platform.indexOf('Win') !== -1;
-
-let host_api;
-
-if (isWindows) {
-  console.log('This is a Windows environment.');
-  // Windows specific settings
-  host_api = "http://192.168.179.22:8000/api";
-} else {
-  console.log('This is not a Windows environment.');
-  // Non-Windows specific settings
-  host_api = "https://adacolle.jp:8080/api";
+  if (hostname === '192.168.179.22') {
+    // console.log('This is the test environment.');
+    return "http://192.168.179.22:8000/api";
+  } else if (hostname === 'adacolle.jp') {
+    // console.log('This is the production environment.');
+    return "https://adacolle.jp:8080/api";
+  } else {
+    // console.log('Unknown environment, defaulting to production.');
+    return "https://adacolle.jp:8080/api";
+  }
 }
 
+const host_api = getApiHost();
 
 // fetchDataAndCommit
 async function fetchDataAndCommit({ commit, endpoint, mutationType }) {
