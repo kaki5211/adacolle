@@ -32,12 +32,19 @@ const route = useRoute();
 
 
 
-const host_api = "http://192.168.179.22:8000/api"
+const isWindows = navigator.platform.indexOf('Win') !== -1;
 
-// const host_api = "https://adacolle.jp:8080/api"
+let host_api;
 
-
-
+if (isWindows) {
+  console.log('This is a Windows environment.');
+  // Windows specific settings
+  host_api = "http://192.168.179.22:8000/api";
+} else {
+  console.log('This is not a Windows environment.');
+  // Non-Windows specific settings
+  host_api = "https://adacolle.jp:8080/api";
+}
 
 
 // fetchDataAndCommit
