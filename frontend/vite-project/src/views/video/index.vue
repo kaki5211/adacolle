@@ -1,18 +1,12 @@
 <template>
   <v-container class="px-2">
 
-    <v-card>  
-      <v-container class="px-2 px-md-4">
-        <v-card v-if="true" class="text-center elevation-0 py-10">
-            <h2 class="text-h5 text-md-h3 mx-auto mb-4 ">
-              <strong class="text-h4 text-md-h2">動画</strong>（FANZA 素人 ）
-            </h2>
-            <div class="text-medium-emphasis text-md-h6 text-body-3 pl-2">
-              FANZAの素人動画を厳選してピックアップ。
-            </div>
-          </v-card>
-      </v-container>
-    </v-card>
+    <MyTitleV1
+      string_card_title_1="動画"
+      string_card_title_2="（FANZA 素人）"
+      string_card_title_3="FANZAの素人動画を厳選してピックアップ。"
+    />    
+
 
     <div class="py-1" />
 
@@ -41,7 +35,7 @@
     <MyCardV1
       :kind="kind"
       :my_card_list="VIDEOS_FILTERED"
-      :boolean_card_title="true"
+      :boolean_card_title="false"
       string_card_title_1=""
       string_card_title_2="動画"
       string_card_title_3=""
@@ -58,6 +52,8 @@
 // import VideoV1 from '@/components/video/Video-v1.vue'
 import MyCardV1 from '@/components/global/my-card-v1.vue'
 import MyCardFilterV1 from '@/components/global/my-card-filter-v1.vue'
+import MyTitleV1 from '@/components/global/my-title-v1.vue'
+
 
 import { useStore } from 'vuex';
 import { computed, ref } from 'vue';

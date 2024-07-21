@@ -30,7 +30,6 @@
           <!-- ■■■■■■■■■■■■■■ -->
           <!-- ■■■ Window ■■■ -->
           <!-- ■■■■■■■■■■■■■■ -->
-
                   <template
                   v-for="(ITEM, index) in my_card_list"
                   :key="index"
@@ -38,12 +37,13 @@
 
                                       
                     <v-col
-                      :cols="boolean_detail ? boolean_detail_one ? 12 : 7 : 6"
+                      :cols="boolean_detail ? boolean_detail_one ? 12 : 7 : 12"
                       :sm="boolean_detail ? boolean_detail_one ? 6 : 5 : 4"
                       :md="boolean_detail ? boolean_detail_one ? 6 : 3 : 4"
-                      class="pb-0 px-1 px-md-2"
+                      class="pb-0 px-2 px-md-1"
                       :class="{'mx-auto ml-md-0': boolean_detail_one}"
                       style="flex-wrap: nowrap!important;"
+                      :id="'#item_' + index"
                     >
                     <v-row no-gutters>
                       <v-col cols="12"
@@ -126,7 +126,7 @@
                                 @click="loading = !loading; handleButtonClick(ITEM.video_productnumber)"
                                 target="_blank"
                               >
-                                FANZA
+                                <!-- FANZA -->
                                 <template v-slot:loader>
                                   <v-progress-linear indeterminate></v-progress-linear>
                                 </template>
@@ -149,7 +149,7 @@
                                 :loading="loading"
                                 @click="loading = !loading;toggleMedia(index)"
                               >
-                                {{ media[index] ? '閉じる' : '再生' }}
+                                <!-- {{ media[index] ? '閉じる' : '再生' }} -->
                                 <template v-slot:loader>
                                   <v-progress-linear indeterminate></v-progress-linear>
                                 </template>
@@ -180,15 +180,15 @@
                           @click="snackbar = true;copyToClipboard(ITEM.video_productnumber)"
                           style="justify-content: flex-start; white-space: pre-wrap;"
                           >
-                            {{ title(ITEM) }}
+                          {{ kind=='video' ? '[' + ITEM.video_productnumber + ']&emsp;' : "" }}{{ title(ITEM) }}
                           </div>
                           
                           <v-snackbar
-                            v-if="kind === 'video'"
+                            v-if="kind === 'video' || boolean_detail_one_article_child"
                             v-model="snackbar"
                             timeout="2000"
                           >
-                          {{ 'コピーしました。' + ITEM.video_productnumber }}
+                          {{ 'コピーしました。' + boolean_detail_one_article_child ? title(ITEM) : ITEM.video_productnumber }}
                             <template v-slot:actions>
                               <v-btn
                                 color="blue"
@@ -240,51 +240,99 @@
                     </v-col>
 
 
-                    <!-- 広告 BTN -->
-                    <v-row v-if="boolean_detail_one_article" class="pa-10">
-                      
-                      <v-col cols="6">
 
-                        <v-btn 
-                          v-for="(item,index_my_card) in video_or_article_tag_list(my_card_list[0])"
-                          :key="index_my_card"
-                          elevation="1"
-                          rounded="0"
-                          class="my-fit-contents text-caption ms-auto px-1 text-md-h6 mx-1"
-                          :prepend-icon="'mdi-tag-text-outline'"
-                          size="small"
-                          outlined
-                          :to=url_tag_video_or_article(item)
+                    <!-- articoe_detail_one_options -->
+
+                      <v-col
+                        v-if="boolean_detail_one_article" 
+                        cols="12"
+                        md="6"
+                        class="pt-0 pt-lg-6 pb-8 d-flex flex-column px-4 px-md-6"
+                        style="justify-content: flex-end;"                        
+                      >
+
+                      <v-row no-gutters>
+                        <v-col
+                          cols="12"
+                          md="12"
+                          class="pt-0 pt-lg-10 d-flex flex-column"
+                          style="justify-content: flex-end;"                        
                         >
-                          
-                          {{ filter_tag_list_name(item) }}
-                        </v-btn>
-                      </v-col>
-                      
-                      <v-col cols="6">
-                        <v-btn 
-                          v-for="(item,index_my_card) in video_or_article_tag_list(my_card_list[0])"
+
+                          <VDataTable
+                            v-if="true"
+                            color="var(--my-color-black)"
+                            :loading="false"
+                            :items-per-page="-1"
+                            :headers="headers"
+                            :items="[ITEM['article_child_options']]"
+                            item-value="name"
+                            class="elevation-0 scrollable"
+                            items-per-page-text=""
+                            page-text=""
+                            next-icon=""
+                            prev-icon=""
+                            first-icon=""
+                            last-icon=""
+                            style="overflow-x: auto; width: 100%; border-collapse: collapse; white-space: nowrap; table-layout: fixed;"
+                            >
+                          <!-- ヘッダースロットをカスタマイズして背景色を変更 -->
+                          <template v-slot:header="{ header }">
+                            <th style="background-color: #f0f0f0; color: black; padding: 10px;">
+                              {{ header.title }}
+                            </th>
+                          </template>
+
+
+                        <!-- テーブル行をレンダリングするためのカスタムアイテムスロット -->
+                        <template v-for="(header, index) in headers" v-slot:[`item.${header.value}`]="{ item }">
+                            <span>{{ item[header.value] }}</span>
+                        </template>
+                              
+                          </VDataTable>
+
+                        </v-col>
+                        </v-row>
+
+                      <!-- 広告 BTN -->
+                      <!-- articoe_detail_one_options -->
+                      <v-row
+                        v-if="boolean_detail_one_article_child"
+                        no-gutters
+                        class="pt-8 pb-0 pt-lg-15 py-0 my-0"
+                      >
+                        <v-col
+                          v-for="(item,index_my_card) in [1,2,3,4]"
                           :key="index_my_card"
-                          elevation="1"
-                          rounded="0"
-                          class="my-fit-contents text-caption ms-auto px-1 text-md-h6 mx-1"
-                          :prepend-icon="'mdi-tag-text-outline'"
-                          size="small"
-                          outlined
-                          :to=url_tag_video_or_article(item)
+                          cols="6"
+                          md="6"
+                          lg="6"
+                          class="d-flex flex-column py-0 my-0"
+                          style="justify-content: flex-end;"
                         >
-                          
-                          {{ filter_tag_list_name(item) }}
-                        </v-btn>
-                      </v-col>      
-                    </v-row>
+                          <v-btn 
+                            :key="index_my_card"
+                            elevation="1"
+                            rounded="0"
+                            class="text-caption ms-auto px-1 text-md-h6 mx-1 w-100 py-0 my-0"
+                            :prepend-icon="''"
+                            size="large"
+                            outlined
+                          >
+                            広告URL {{ index_my_card }}
+                          </v-btn>
+                        </v-col>
+                        
+                      </v-row>
+                    </v-col>
 
 
 
 
-
+                    <v-divider v-if="boolean_detail ? boolean_detail_one ? false : false : true" class="my-divider d-md-none my-5"></v-divider>
+                    <v-divider v-if="boolean_detail ? boolean_detail_one_article_child ? true : false : false" class="my-divider my-5"></v-divider>
                     <v-divider v-if="(index+1) % 3 == 0" class="my-divider d-none d-md-block"></v-divider>
-                    <v-divider v-if="(index+1) % 2 == 0" class="my-divider d-md-none"></v-divider>
+                    <v-divider v-if="(index+1) % 2 == 0" class="my-divider d-none d-sm-block d-md-none"></v-divider>
                     <!-- <v-divider v-if="(index+1) % 3 == 0" class="my-divider"></v-divider> -->
                      
 
@@ -363,7 +411,11 @@ const VIDEOS_FILTERED = computed(() => { return store.getters.GET_VIDEOS_FILTERE
 import { useRoute } from 'vue-router';
 const route = useRoute();
 const TableargetvideoProductNumber  = route.params.video_productnumber;
+const targetarticleinfo  = route.params.article_title_eng;
 const VIDEO_DETAIL = computed(() => { return VIDEOS.value.find(item => item.video_productnumber === TableargetvideoProductNumber); });
+const ARTICLE_DETAIL = computed(() => { return ARTICLE_LIST.value.find(item => item.article_title_eng === targetarticleinfo); });
+
+
 
 import { useDisplay } from 'vuetify';
 const { mdAndUp } = useDisplay();
@@ -401,6 +453,9 @@ const props = defineProps({
   string_detail_sub: { type: String},
   boolean_detail_one: { type: Boolean},
   boolean_detail_one_article: { type: Boolean},
+  boolean_detail_one_article_child: { type: Boolean},
+
+  
 
   // item: { type: Object},
   // item: { type: Object, required: true},
@@ -428,7 +483,11 @@ function imageSrc(item) {
   if (props.kind === 'video') {
     return item.video_image;
   } else if (props.kind === 'article') {
-    return item.article_childlen[0].article_child_options.image;
+    if (props.boolean_detail_one_article_child){
+      return item.article_child_options.image;
+    } else{
+      return item.article_childlen[0].article_child_options.image;
+    }
   } else {
     return 'default_image_path.jpg';  // デフォルト
   }
@@ -438,7 +497,11 @@ function postday(item) {
   if (props.kind === 'video') {
     return item.video_postday;
   } else if (props.kind === 'article') {
-    return item.article_post_day;
+    if (props.boolean_detail_one_article_child){
+      return "";
+    } else{
+      return item.article_post_day;
+    }
   } else {
     return 'error';  // デフォルト
   }
@@ -448,7 +511,11 @@ function title(item) {
   if (props.kind === 'video') {
     return item.video_title.split(" - ")[0];
   } else if (props.kind === 'article') {
-    return item.article_title;
+    if (props.boolean_detail_one_article_child){
+      return item.article_name;
+    } else{
+      return item.article_title;
+    }
   } else {
     return 'error';  // デフォルト
   }
@@ -458,7 +525,11 @@ function url(item) {
   if (props.kind === 'video') {
     return { name: 'Video_Detail', params: { video_productnumber: item.video_productnumber }};
   } else if (props.kind === 'article') {
-    return { name: 'Article_Detail', params: { article_title_eng: item.article_title_eng }};
+    if (props.boolean_detail_one_article_child){
+      return "";
+    } else{
+      return { name: 'Article_Detail', params: { article_title_eng: item.article_title_eng }};
+    }
   } else {
     return { name: 'Error' };  // デフォルトのルート名を指定
   }
@@ -591,11 +662,16 @@ function url_tag_video_or_article(item) {
   if (props.kind === 'video') {
     return { name: 'Video', query: { tag: item.name_eng, performer: '' } };
   } else if (props.kind === 'article') {
-    return { name: 'Article', query: { tag: item.article_tag_name_eng, performer: '' } };
+    if (props.boolean_detail_one_article_child){
+      return "";
+    } else{
+      return { name: 'Article', query: { tag: item.article_tag_name_eng, performer: '' } };
+    }
   } else {
     return 'error';  // デフォルト
   }
 }
+
 
 function url_account_video_or_article(item) {
   if (props.kind === 'video') {
@@ -627,6 +703,26 @@ const copyToClipboard = (text) => {
 
 
 
+
+
+// article_dettail_one_options
+const headers = computed(() => {
+  let headers = [] // 配列をリアクティブにするために ref を使用して初期化
+  // シングルクォートをダブルクォートに置き換え
+  let inputStr = ARTICLE_DETAIL.value.article_options_order.replace(/'/g, '"');
+  // JSON.parseを使って文字列を配列に変換
+  let outputArray = JSON.parse(inputStr);
+  // JSON.parseを使って文字列をオブジェクトに変換
+  // let outputObjDict = JSON.parse(ARTICLE_DETAIL.value.article_options);
+  let outputObjDict = ARTICLE_DETAIL.value.article_options;
+
+  for (let item of outputArray) {
+    let itemValue = outputObjDict[item];
+    headers.push({ title: itemValue, align: 'start', key: item, value: item });
+  }
+  return headers.filter(header => header.key !== 'image' && header.key !== 'name');
+
+});
 
 
 
@@ -719,4 +815,16 @@ const copyToClipboard = (text) => {
   white-space: nowrap;
 }
 
+.scrollable {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+</style>
+
+
+<style>
+.scrollable {
+  overflow-x: auto;
+  white-space: nowrap;
+}
 </style>

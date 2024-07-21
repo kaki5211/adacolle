@@ -3,9 +3,12 @@
 
 
     
-    <!-- <h1>Testimonials</h1> -->
 
-
+    <MyTitleV1
+      :string_card_title_1="ARTICLE_DETAIL.article_title"
+      string_card_title_2=""
+      string_card_title_3=""
+    />    
 
     <!-- <ArticleDetailV1 /> -->
     <!-- <MyCardV1
@@ -32,17 +35,17 @@
 
     <MyCardV1
       :kind="kind"
-      :my_card_list="ARTICLE_LIST"
-      :boolean_card_title="1 == 1 ? true : false"
-      string_card_title_1="一覧"
+      :my_card_list="ARTICLE_DETAIL_OPTIONS_FILTERED.article_childlen"
+      :boolean_card_title="1 == -1 ? true : false"
+      string_card_title_1=""
       string_card_title_2=""
-      string_card_title_3=""
+      string_card_title_3="&nbsp;"
       :boolean_detail = true
       string_detail = ""
       string_detail_sub = ""
       :boolean_detail_one = true
       :boolean_detail_one_article = true
-
+      :boolean_detail_one_article_child = true
     />
 
     <div class="py-1" />
@@ -64,7 +67,6 @@
       />
     </template>
 
-
   </v-container>
 </template>
 
@@ -73,6 +75,8 @@ import ArticleDetailV1 from '@/components/article_detail/ArticleDetail-v1.vue'
 // import ArticleDetailV2 from '@/components/article_detail/ArticleDetail-v2.vue'
 import ArticleDetailV3 from '@/components/article_detail/ArticleDetail-v3.vue'
 import MyCardV1 from '@/components/global/my-card-v1.vue'
+import MyTitleV1 from '@/components/global/my-title-v1.vue'
+
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
@@ -83,6 +87,7 @@ const route = useRoute();
 const ARTICLE_LIST = computed(() => { return store.getters.GET_ARTICLE_LIST; });
 const Tableargetarticlenameeng  = route.params.article_title_eng;
 const ARTICLE_DETAIL = computed(() => { return ARTICLE_LIST.value.find(item => item.article_title_eng === Tableargetarticlenameeng); });
+const ARTICLE_DETAIL_OPTIONS_FILTERED = computed(() => { return store.getters.GET_ARTICLE_DETAIL_OPTIONS_FILTERED; });
 
 
 import { computed, ref } from 'vue';

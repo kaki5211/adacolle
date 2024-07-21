@@ -252,7 +252,7 @@
                   class="ms-auto me-0"
                   >
                     全 
-                    <!-- <a v-if="filteredData" class="text-red">{{ filteredData.length || "0"}}</a> -->
+                    <a v-if="filteredData" class="text-red">{{ filteredData.length || "0"}}</a>
                     件 表示
                   </div>
                 </div>

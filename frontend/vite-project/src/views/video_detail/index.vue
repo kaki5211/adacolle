@@ -2,18 +2,11 @@
   <v-container class="px-2">
 
 
-    <v-card>  
-      <v-container class="px-2 px-md-4">
-        <v-card v-if="true" class="text-center elevation-0 py-10">
-            <h2 class="text-h5 text-md-h3 mx-auto mb-4 ">
-              <strong class="text-h4 text-md-h2">動画</strong>（FANZA 素人 ）
-            </h2>
-            <div class="text-medium-emphasis text-md-h6 text-body-3 pl-2">
-              FANZAの素人動画を厳選してピックアップ。
-            </div>
-          </v-card>
-      </v-container>
-    </v-card>
+    <MyTitleV1
+    :string_card_title_1="'[' + VIDEO_DETAIL.video_productnumber + ']&emsp;' + VIDEO_DETAIL.video_title.split(' - ')[0]"
+      string_card_title_2=""
+      string_card_title_3=""
+    />    
 
     <div class="py-1" />
 
@@ -87,10 +80,10 @@
 </template>
 
 <script lang="ts" setup>
-import VideoDetailV1 from '@/components/video_detail/VideoDetail-v1.vue'
-import VideoDetailV2 from '@/components/video_detail/VideoDetail-v2.vue'
 import MyCardFilterV1 from '@/components/global/my-card-filter-v1.vue'
 import MyCardV1 from '@/components/global/my-card-v1.vue'
+import MyTitleV1 from '@/components/global/my-title-v1.vue'
+
 
 
 import { useStore } from 'vuex';
@@ -166,6 +159,9 @@ const boolean_filter_account = true
 const boolean_filter_tag = true
 
 const kind_cat = true
+
+
+
 
 </script>
 

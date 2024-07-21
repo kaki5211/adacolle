@@ -7,11 +7,11 @@
       </h2> -->
   
           <h2 class="text-h5 text-md-h3 mx-auto mb-4 ">
-            <strong class="text-h4 text-md-h2">動画</strong>（FANZA 素人 ）
+            <strong class="text-h4 text-md-h2">フィルター</strong><!-- （FANZA 素人 ） -->
           </h2>
 
           <div class="text-medium-emphasis text-md-h6 text-body-3 pl-2">
-            FANZAの素人動画を厳選してピックアップ。
+            
           </div>
 
         </v-card>
@@ -97,7 +97,7 @@
 
 
     <div
-      class="d-none d-xs-block"
+      class=""
     >
 
         <v-row
@@ -119,7 +119,6 @@
               :items="ARTICLE_DETAIL_OPTIONS_FILTERED.article_childlen"
               item-value="name"
               class="elevation-1 scrollable"
-              :items-per-page-options="[ {value: -1, title: 'All'} ]"
               items-per-page-text=""
               page-text=""
               next-icon=""
@@ -134,15 +133,25 @@
                   {{ header.text }}
                 </th>
               </template>
-              
+                      
               <!-- テーブル行をレンダリングするためのカスタムアイテムスロット -->
-              <template v-for="(header, index) in headers" v-slot:[`item.${header.value}`]="{ item }">
-                <template v-if="index === 0">
-                  <v-img style="object-fit: cover;" :src="item.article_child_options.image" width="100" height="30"></v-img>
-                </template>
-                <template v-else>
-                  <span>{{ item.article_child_options[header.value] }}</span>
-                </template>         
+              <template v-slot:item="{ item, index }">
+                <tr>
+                  <template v-for="header in headers">
+                    <td v-if="header.key === 'image'">
+                      <v-img
+                        style="object-fit: cover;"
+                        :src="item.article_child_options.image"
+                        width="100"
+                        height="30"
+                        @click="scrollToItem(index)"
+                      ></v-img>
+                    </td>
+                    <td v-else>
+                      <span>{{ item.article_child_options[header.value] }}</span>
+                    </td>
+                  </template>
+                </tr>
               </template>
             </VDataTable>
             </div>
@@ -151,66 +160,6 @@
 
         </v-row>
 </div>
-
-
-
-
-
-
-
-
-
-          <!-- ■■■■■■■■■■■■■■ -->
-          <!-- ■■■ Mobile ■■■-->
-          <!-- ■■■■■■■■■■■■■■ -->
-        <v-row
-          class="d-xs-none"
-        >
-        <v-col>
-
-        <div>
-          <VDataTable
-              v-if="ARTICLE_DETAIL_OPTIONS_FILTERED"
-              color="var(--my-color-black)"
-              :loading="false"
-              :items-per-page="-1"
-              :headers="headers"
-              :items="ARTICLE_DETAIL_OPTIONS_FILTERED.article_childlen"
-              item-value="name"
-              class="elevation-1 scrollable"
-              :items-per-page-options="[ {value: -1, title: 'All'} ]"
-              items-per-page-text=""
-              page-text=""
-              next-icon=""
-              prev-icon=""
-              first-icon=""
-              last-icon=""
-              style="overflow-x: auto; width: 100%; border-collapse: collapse; white-space: nowrap; table-layout: fixed;"
-            >
-              <!-- ヘッダースロットをカスタマイズして背景色を変更 -->
-              <template v-slot:header="{ header }">
-                <th style="background-color: #f0f0f0; color: black; padding: 10px;">
-                  {{ header.text }}
-                </th>
-              </template>
-              
-              <!-- テーブル行をレンダリングするためのカスタムアイテムスロット -->
-              <template v-for="(header, index) in headers" v-slot:[`item.${header.value}`]="{ item }">
-                <template v-if="index === 0">
-                  <v-img style="object-fit: cover;" :src="item.article_child_options.image" width="100" height="30"></v-img>
-                </template>
-                <template v-else>
-                  <span>{{ item.article_child_options[header.value] }}</span>
-                </template>         
-              </template>
-            </VDataTable>
-            </div>
-          </v-col>
-        </v-row>
-
-
-
-
 
 
 
@@ -238,15 +187,11 @@ const ARTICLE_DETAIL = computed(() => { return ARTICLE_LIST.value.find(item => i
 
 const ARTICLE_DETAIL_OPTIONS_SEARCH_LIST = computed(() => { 
   let result = {};
-  console.log("ARTICLE_DETAIL.value.article_options_explain", ARTICLE_DETAIL.value)
-  console.log("ARTICLE_DETAIL.value.article_options_explain", ARTICLE_DETAIL.value.article_options_explain)
-  console.log("JSON.parse(ARTICLE_DETAIL.value.article_options_explain)", JSON.parse(ARTICLE_DETAIL.value.article_options_explain))
-  console.log("Object.entries(JSON.parse(ARTICLE_DETAIL.value.article_options_explain))", Object.entries(JSON.parse(ARTICLE_DETAIL.value.article_options_explain)))
   for (const [key, value] of Object.entries(JSON.parse(ARTICLE_DETAIL.value.article_options_explain))) {
     result[key] = [];  // 初期値として空の配列をセット
   }
   store.commit('SET_ARTICLE_DETAIL_OPTIONS_SEARCH_LIST', result);
-  return store.getters.GET_ARTICLE_DETAIL_OPTIONS_SEARCH_LIST; 
+  return result; 
 });
 
 store.commit('SET_ARTICLE_DETAIL_OPTIONS_FILTERED', ARTICLE_DETAIL.value);
@@ -254,7 +199,6 @@ store.commit('SET_ARTICLE_DETAIL_OPTIONS_FILTERED', ARTICLE_DETAIL.value);
 const ARTICLE_DETAIL_OPTIONS_FILTERED = computed(() => {
   let temp = cloneDeep(ARTICLE_DETAIL.value);
   // searchparams.valueが定義されるまで待つ
-  let count = 0;
   for (const [key, values] of Object.entries(ARTICLE_DETAIL_OPTIONS_SEARCH_LIST.value)) {
     if (values.length === 0) {
     continue; // values が空の場合、次のループへ
@@ -264,25 +208,18 @@ const ARTICLE_DETAIL_OPTIONS_FILTERED = computed(() => {
       return values.includes(item.article_child_options[key]);
     });
     }
-    count += 1
   }
+  // return  temp
+
+  store.commit('SET_ARTICLE_DETAIL_OPTIONS_FILTERED', temp);
   return  temp
 
-  // store.commit('SET_ARTICLE_DETAIL_OPTIONS_FILTERED', temp);
   // return  store.getters.GET_ARTICLE_DETAIL_OPTIONS_FILTERED
 });
 
 
 
 
-
-  
-// const orders = computed(() => {
-//   let inputStr = ARTICLE_DETAIL.value.article_options_order.replace(/'/g, '"');
-//   // JSON.parseを使って文字列を配列に変換
-//   let outputArray = JSON.parse(inputStr);
-//   return outputArray
-// })
 
 
 const headers = computed(() => {
@@ -464,6 +401,16 @@ const updateSelection = (key, key2) => {
 
 
 
+const scrollToItem = (index) => {
+  const element = document.getElementById(`#item_${index}`);
+  if (element) {
+    const topPosition = element.getBoundingClientRect().top + window.scrollY - 100;
+    window.scrollTo({
+      top: topPosition,
+      behavior: 'smooth'
+    });
+  }
+};
 
 
 
@@ -542,5 +489,18 @@ const updateSelection = (key, key2) => {
   overflow-x: auto;
   white-space: nowrap;
 }
+
+
 </style>
   
+
+<style>
+
+
+
+
+.v-data-table-footer {
+  display: none;
+}
+
+</style>

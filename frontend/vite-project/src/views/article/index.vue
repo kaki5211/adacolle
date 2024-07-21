@@ -1,12 +1,24 @@
 <template>
   <v-container class="px-2">
 
+
+    <MyTitleV1
+      string_card_title_1="記事"
+      string_card_title_2="（ブログ）"
+      string_card_title_3="あらゆるジャンルを比較調査する実用性ブログ。"
+    />    
+
+    <div class="py-1" />
+
+
+
     <MyCardFilterV1
       :kind="kind"
       :my_card_list="ARTICLE_LIST_FILTERED"
-      :string_card_title_1="string_card_title_1"
-      :string_card_title_2="string_card_title_2"
-      :string_card_title_3="string_card_title_3"
+      :boolean_card_title="true"
+      string_card_title_1=""
+      string_card_title_2="フィルター"
+      string_card_title_3=""
       :boolean_filter_account="boolean_filter_account"
       :boolean_filter_tag="boolean_filter_tag"
 
@@ -42,6 +54,7 @@
 <script lang="ts" setup>
 import MyCardV1 from '@/components/global/my-card-v1.vue'
 import MyCardFilterV1 from '@/components/global/my-card-filter-v1.vue'
+import MyTitleV1 from '@/components/global/my-title-v1.vue'
 
 import { useStore } from 'vuex';
 import { computed, ref } from 'vue';
