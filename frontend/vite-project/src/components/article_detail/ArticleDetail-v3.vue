@@ -26,7 +26,6 @@
         md="6"
         lg="4"
         >
-        {{ ARTICLE_DETAIL_OPTIONS_SEARCH_LIST }}
       <!-- 素材セクション -->
         <v-card class="mb-4">
           <v-card-title v-if="ARTICLE_DETAIL_OPTIONS_SEARCH_LIST">

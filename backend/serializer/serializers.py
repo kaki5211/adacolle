@@ -1024,7 +1024,7 @@ class GetArticletagSerializer(serializers.ModelSerializer):
 class GetArticlechildSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article_child
-        fields = ["article_name", "article_name_eng", "article_child_options"]
+        fields = ["article_name", "article_name_eng", "article_child_options", "article_affiliate_urls"]
     def create(self, validated_data):
         # レコード作成を禁止するため、何も処理せずに例外を発生させます
         raise serializers.ValidationError("Creating records is not allowed.")
@@ -1070,6 +1070,7 @@ class CreateArticlechildSerializer(serializers.ModelSerializer):
                 "article_name" : article_name_info,
                 "article_name_eng" : article_name_eng_info,
                 "article_child_options" : my_dict,
+                "article_affiliate_urls" : ''
             }, indent=4)
 
             # JSON文字列を辞書に変換

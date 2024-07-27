@@ -76,6 +76,21 @@
                             {{item.name}}
                           </v-btn>
                         </v-col>
+                        <v-col cols="12" class="d-flex rounded-1"
+                          v-for="(item,iii) in [VIDEO.video_label]"
+                          :key="iii"
+
+                        >
+                          <v-btn 
+                            rounded="0"
+                            class="my-fit-contents text-caption ms-auto me-0 px-1 pl-2"
+                            :prepend-icon="'mdi-label-outline'"
+                            style="z-index: 10;"
+                            :to="{ name: 'Video', query: { tag: '',performer: '', label: item.name_eng } }"
+                            >
+                            {{item.name}}
+                          </v-btn>
+                        </v-col>                        
                       </v-row>
 
 

@@ -26,7 +26,8 @@
         cols="12"
       >
         All rights are reserved &copy;
-        {{ new Date().getFullYear() }}, Vuetify, LLC
+        2024, adacolle.jp
+        <!-- {{ new Date().getFullYear() }} -->
       </div>
     </v-container>
   </v-card>

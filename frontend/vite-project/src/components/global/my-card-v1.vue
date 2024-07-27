@@ -19,7 +19,7 @@
 
 
 
-        
+
     <div class="px-md-2">
         <v-row
           :class="{'flex-nowarp': boolean_detail && !boolean_detail_one,
@@ -32,6 +32,7 @@
           <!-- ■■■■■■■■■■■■■■ -->
                   <template
                   v-for="(ITEM, index) in my_card_list"
+                
                   :key="index"
                   >
 
@@ -57,20 +58,27 @@
                               </video>
                           </v-col>
                         </v-row>
-                      <router-link
-                        :key="index"
-                        style="width: 100%; height: 100%; text-decoration: none; z-index: 1;"
-                        :to="url(ITEM)"
-                      >
 
+
+                    <component
+                      :is="(boolean_detail && boolean_detail_one && (kind == 'video')) ? 'a' : 'router-link'"
+                      :key="index"
+                      :to="(boolean_detail && boolean_detail_one && (kind == 'video')) ?  undefined : url(ITEM)"
+                      @click="(boolean_detail && boolean_detail_one && (kind == 'video')) ? handleButtonClick2(ITEM.video_productnumber) : undefined"
+                      style="width: 100%; height: 100%; text-decoration: none; z-index: 1;"
+                      :target="(boolean_detail && boolean_detail_one && (kind == 'video')) ? '_blank' : undefined"
+                      :rel="(boolean_detail && boolean_detail_one && (kind == 'video')) ? 'noopener noreferrer' : undefined"
+                    >
+
+                    
                         <v-img
                           v-if="!media[index]"
                           class="rounded-t aspect-ratio-block mx-auto elevation-0"
                           :src="imageSrc(ITEM)"
                           lazy-src="https://picsum.photos/id/11/100/60"
                           alt="Image"
-                          :to="url(ITEM)"
                         >
+                        
                         <v-row v-if='kind==="video" && boolean_detail==false && boolean_detail_one==false' no-gutters
                         class="d-none d-xs-block"
                         >
@@ -105,9 +113,23 @@
                               {{item2.name}}
                             </v-btn>
                           </v-col>
+
+                          <v-col cols="12" class="d-flex rounded-1"
+                          >
+                            <v-btn 
+                              rounded="0"
+                              class="my-fit-contents text-caption ms-auto me-0 px-1 pl-2"
+                              :prepend-icon="'mdi-label-outline'"
+                              size="small"
+                              exact
+                              :to=url_label_video_or_article(ITEM.video_label)
+                              >
+                              {{ ITEM.video_label.name }}
+                            </v-btn>
+                          </v-col>
                         </v-row>
                       </v-img>
-                    </router-link>
+                    </component>
 
 
 
@@ -212,7 +234,7 @@
                             :key="index_my_card"
                             elevation="1"
                             rounded="0"
-                            class="my-fit-contents text-caption ms-auto px-1 text-md-h6 mx-1 "
+                            class="my-fit-contents text-caption ms-auto px-1 mb-1 text-md-h6 mx-1 "
                             :prepend-icon="'mdi-account-circle'"
                             size="small"
                             exact
@@ -226,16 +248,31 @@
                             :key="index_my_card"
                             elevation="1"
                             rounded="0"
-                            class="my-fit-contents text-caption ms-auto px-1 text-md-h6 mx-1"
+                            class="my-fit-contents text-caption ms-auto px-1 mb-1 text-md-h6 mx-1"
                             :prepend-icon="'mdi-tag-text-outline'"
                             size="small"
                             outlined
                             :to=url_tag_video_or_article(item)
                             >
-                            
                             {{ filter_tag_list_name(item) }}
-
                           </v-btn>
+
+                          <template v-if="kind === 'video'">
+                            <v-btn
+                            v-for="(item, index_my_card) in [my_card_list[0].video_label]"
+                              :key="index_my_card"
+                              elevation="1"
+                              rounded="0"
+                              class="my-fit-contents text-caption ms-auto px-1 mb-1 text-md-h6 mx-1 "
+                              :prepend-icon="'mdi-label-outline'"
+                              size="small"
+                              exact
+                              :to=url_account_video_or_article(item)
+                              >
+                              {{ ITEM.video_label.name }}　
+                            </v-btn>
+                          </template>
+
                         </v-col>
                     </v-col>
 
@@ -302,7 +339,7 @@
                         class="pt-8 pb-0 pt-lg-15 py-0 my-0"
                       >
                         <v-col
-                          v-for="(item,index_my_card) in [1,2,3,4]"
+                          v-for="(item,index_my_card) in ITEM['article_affiliate_urls']"
                           :key="index_my_card"
                           cols="6"
                           md="6"
@@ -310,23 +347,23 @@
                           class="d-flex flex-column py-0 my-0"
                           style="justify-content: flex-end;"
                         >
-                          <v-btn 
-                            :key="index_my_card"
-                            elevation="1"
-                            rounded="0"
-                            class="text-caption ms-auto px-1 text-md-h6 mx-1 w-100 py-0 my-0"
-                            :prepend-icon="''"
-                            size="large"
-                            outlined
-                          >
-                            広告URL {{ index_my_card }}
-                          </v-btn>
+                          <a :href="item" target="_blank" rel="noopener noreferrer">
+                            <v-btn 
+                              :key="index_my_card"
+                              elevation="1"
+                              rounded="0"
+                              class="text-caption ms-auto px-1 text-md-h6 mx-1 w-100 py-0 my-0"
+                              :prepend-icon="''"
+                              size="large"
+                              outlined
+                            >
+                              {{ ["Amazon", "adacolle", "adacolle2", "大魔王"][index_my_card-1] }}
+                            </v-btn>
+                          </a>
                         </v-col>
                         
                       </v-row>
                     </v-col>
-
-
 
 
                     <v-divider v-if="boolean_detail ? boolean_detail_one ? false : false : true" class="my-divider d-md-none my-5"></v-divider>
@@ -360,7 +397,7 @@
                     >
                       <v-row no-gutters>
                         <v-col
-                          v-for="(image, index) in VIDEO_DETAIL_images(VIDEO_DETAIL.video_images)"
+                          v-for="(image, index) in VIDEO_DETAIL_images(my_card_list[0].video_images)"
                           :key="index"
                           :cols="boolean_detail ? boolean_detail_one ? 6 : 7 : 6"
                           :sm="boolean_detail ? boolean_detail_one ? 4 : 5 : 4"
@@ -555,9 +592,30 @@ function toggleMedia(index) {
 
 
 function handleButtonClick(item) {
-  const url = `https://www.dmm.co.jp/digital/videoc/-/detail/=/cid=${item}/`;
-  window.open(url, '_blank');
+  const baseurl = "https://al.dmm.co.jp/?lurl=";
+  const url = encodeURIComponent(`https://www.dmm.co.jp/digital/videoc/-/detail/=/cid=${item}/`);
+  const url_option ="&af_id=adacolle-001&ch=toolbar&ch_id=text";
+  
+  const result = baseurl + url + url_option;
+
+  console.log("result", result)
+
+  window.open(result, '_blank');
 }
+
+function handleButtonClick2(item) {
+  const baseurl = "https://al.dmm.co.jp/?lurl=";
+  const url = encodeURIComponent(`https://www.dmm.co.jp/digital/videoc/-/detail/=/cid=${item}/`);
+  const url_option ="&af_id=adacolle-001&ch=toolbar&ch_id=package_large";
+  
+  const result = baseurl + url + url_option;
+
+  // return result
+  console.log("result", result)
+
+  window.open(result, '_blank');
+}
+
 
 
 
@@ -682,6 +740,19 @@ function url_account_video_or_article(item) {
     return 'error';  // デフォルト
   }
 }
+
+
+function url_label_video_or_article(item) {
+  if (props.kind === 'video') {
+    return { name: 'Video', query: { tag: '', performer: '', label: item.name_eng } };
+  } else if (props.kind === 'article') {
+    return { name: 'Article', query: { tag: '', performer: '', label: '' } };
+  } else {
+    return 'error';  // デフォルト
+  }
+}
+
+
 
 // クリップボードコピー-----------------
 // データの定義

@@ -80,8 +80,9 @@ class Article_child(models.Model):
     article_title_id = models.CharField(max_length=255, blank=True, null=True)
     article_name = models.CharField(max_length=255, blank=True, null=True)
     article_name_eng = models.CharField(max_length=255, blank=True, null=True)
-    
+
     article_child_options = models.JSONField()
+    article_affiliate_urls = models.JSONField()
 
 
 

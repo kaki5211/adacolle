@@ -175,6 +175,59 @@
                         </v-row>
                     </v-col>
                   </v-row>
+
+
+
+
+                <!-- アカウント -->
+                <v-row no-gutters>
+                  <v-col cols="12">                 
+                <v-card md="6" v-if="boolean_filter_account" height="" class="my-bg-color-white" elevation=0>
+                  <v-row no-gutters>
+                    <v-col cols="12" class="border">
+                      <v-btn small outlined tile block class="my-text-color font-weight-medium rounded-b-0 elevation-0" color="primary"
+                      height=""><v-icon>mdi-label-outline</v-icon>レーベル</v-btn>
+                        <v-row no-gutters class="my-auto">
+                          <v-col cols="12" class="border px-2 py-1 pb-10">
+                              <v-chip-group
+                                v-model="searchparams.labels"
+                                column
+                                multiple
+                                color="text-deep-purple-accent-4"
+
+                              >
+                                  <v-chip
+                                  v-for="item in LABEL_LIST"
+                                  size="small"
+                                  :key="item.id"
+                                  label
+                                  outline
+                                  :value="filter_account_list_name_eng(item)"
+                                  color="red"
+                                  class="custom-chip-style mx-0 mb-1 mt-0 elevation-1"
+
+                                >
+                                  {{ filter_account_list_name(item) }}
+                                </v-chip>
+                              </v-chip-group>
+                          </v-col>
+                          
+                        </v-row>
+                    </v-col>
+                  </v-row>
+                </v-card>
+                </v-col>
+                </v-row>                  
+
+
+
+
+
+
+
+
+
+                  
                 </v-card>
 
     </v-col>
@@ -373,6 +426,60 @@
                   </v-row>
                 </v-card>
 
+                <!-- レーベル -->
+                <v-card v-if="boolean_filter_account" height="" class="my-bg-color-white" elevation=0>
+                  <v-row no-gutters>
+                    <v-col cols="12" class="border">
+                      <v-btn small outlined tile block class="my-text-color font-weight-medium rounded-b-0 elevation-0" color="primary"
+                      height=""><v-icon>mdi-account-circle</v-icon>アカウント</v-btn>
+                        <v-row no-gutters class="my-auto">
+                          <v-col cols="12" class="border px-2 py-1 pb-10">
+                              <v-chip-group
+                                v-model="searchparams.performers"
+                                column
+                                multiple
+                                color="text-deep-purple-accent-4"
+                                
+                              >
+                                  <v-chip
+                                  v-for="item in PERFORMER_LIST"
+                                  @clock=" store.commit('SET_SEARCHPARAMS_VIDEO', { value: { tags: [], performers: [searchparams.performers] } })"
+                                  size="small"
+                                  :key="item.id"
+                                  label
+                                  outline
+                                  :value="filter_account_list_name_eng(item)"
+                                  color="red"
+                                  class="custom-chip-style mx-0 mb-1 mt-0 elevation-1 px-2"
+
+                                >
+                                {{ filter_account_list_name(item) }}
+                              </v-chip>
+                              </v-chip-group>
+                              <!-- {{searchparams.performers}} -->
+
+                              <!-- <div class="d-flex py-3">
+                                <v-btn
+                                @click="resetSearchParams(searchparams, 'performers')"
+                                text="アカウントをクリア"
+                                class="ms-auto me-0 my-fit-contents"
+                                color="red"
+                                >
+                                <template v-slot:prepend>
+                                    <v-icon><Icon icon="iwwa:delete" /></v-icon>
+                                  </template>
+                                </v-btn>
+                              </div> -->
+                              
+                          </v-col>
+                          
+                        </v-row>
+                    </v-col>
+                  </v-row>
+                </v-card>
+
+
+
     </v-col>
 
 
@@ -398,6 +505,8 @@ const ARTICLE_TAG_LIST = computed(() => { return store.getters.GET_ARTICLE_TAG_L
 const VIDEOS_FILTERED = computed(() => { return store.getters.GET_VIDEOS_FILTERED; });
 const ARTICLE_LIST_FILTERED = computed(() => { return store.getters.GET_ARTICLE_LIST_FILTERED; });
 
+
+
 console.log("VIDEOS_FILTERED", VIDEOS_FILTERED)
 console.log("ARTICLE_LIST_FILTERED", ARTICLE_LIST_FILTERED)
 
@@ -406,6 +515,7 @@ console.log("ARTICLE_LIST_FILTERED", ARTICLE_LIST_FILTERED)
 const VIDEOS = computed(() => { return store.getters.GET_VIDEOS; });
 const PERFORMER_LIST = computed(() => { return store.getters.GET_PERFORMER_LIST; });
 const TAG_LIST = computed(() => { return store.getters.GET_TAG_LIST; });
+const LABEL_LIST = computed(() => { return store.getters.GET_LABEL_LIST; });
 
 
 
@@ -456,7 +566,8 @@ store.dispatch('FETCH_GET_VIDEOS_FILTERED');
 
 let searchparams=ref({
       "tags":[],
-      "performers": []
+      "performers": [],
+      "labels": []
 });
 let filteredData=ref([]);
 if(props.kind=="video"){
@@ -484,6 +595,7 @@ watch(
       // クエリパラメータが変更されたときにsearchparamsを更新
       searchparams.value.tags = newQuery.tag ? [newQuery.tag] : [];
       searchparams.value.performers = newQuery.performer ? [newQuery.performer] : [];
+      searchparams.value.labels = newQuery.label ? [newQuery.label] : [];
 
       if (props.kind=="video") {
         // store.commit('SET_SEARCHPARAMS_VIDEO',{ tags: [newQuery.tag], performers: [newQuery.performer] } );
@@ -498,7 +610,7 @@ watch(
 );
 
 watch(
-  () => [searchparams.value.tags, searchparams.value.performers],
+  () => [searchparams.value.tags, searchparams.value.performers, searchparams.value.labels ],
   (newQuery) => {
       // クエリパラメータが変更されたときにsearchparamsを更新
       // searchparams.value.tags = newQuery.tag ? [newQuery.tag] : [];
@@ -506,7 +618,7 @@ watch(
 
       if (props.kind=="video") {
         // store.commit('SET_SEARCHPARAMS_VIDEO',{ tags: [newQuery.tag], performers: [newQuery.performer] } );
-        store.dispatch('FETCH_GET_SEARCHPARAMS_VIDEO', { tags: searchparams.value.tags, performers: searchparams.value.performers });
+        store.dispatch('FETCH_GET_SEARCHPARAMS_VIDEO', { tags: searchparams.value.tags, performers: searchparams.value.performers, labels: searchparams.value.labels });
       } else if (props.kind=="article") {
         // store.commit('SET_SEARCHPARAMS_ARTICLE',{ tags: [searchparams.value.performers]} );
         store.dispatch('FETCH_GET_SEARCHPARAMS_ARTICLE', { tags: searchparams.value.tags });
@@ -514,6 +626,7 @@ watch(
   },
   // { immediate: true }
 );
+
 
 
 
@@ -548,9 +661,10 @@ if (kind === 'all') {
     //   "performers": performers
     // };
 
-  if (props.kind=="video") {
+if (props.kind=="video") {
     searchparams.tags = [];
     searchparams.performers = [];
+    searchparams.labels = [];
     store.dispatch('FETCH_GET_SEARCHPARAMS_VIDEO', searchparams );
   } else if (props.kind=="article") {
     searchparams.tags = [];

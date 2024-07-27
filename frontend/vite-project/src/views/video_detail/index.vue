@@ -47,7 +47,7 @@
     >
       <MyCardV1
         :kind="kind"
-        :my_card_list="[...VIDEOS, ...VIDEOS, ...VIDEOS]"
+        :my_card_list="[item[1]]"
         :boolean_card_title="index == 0 ? true : false"
         string_card_title_1="関連"
         string_card_title_2=""
@@ -57,14 +57,16 @@
         string_detail_sub = "(女優)"
       />
     </template>
+    {{  }}
 
+    <!-- :my_card_list="[...VIDEOS, ...VIDEOS, ...VIDEOS]" -->
 
     <template v-for="(item, index) in connection_tags"
      :key="index"
     >
       <MyCardV1
         :kind="kind"
-        :my_card_list="VIDEOS"
+        :my_card_list="[item[1]]"
         :boolean_card_title="index == -1 ? true : false"
         string_card_title_1="関連"
         string_card_title_2=""
@@ -75,6 +77,24 @@
       />
     </template>
     
+    
+    <template v-for="(item, index) in connection_labels"
+     :key="index"
+    >
+      <MyCardV1
+        :kind="kind"
+        :my_card_list="[item[1]]"
+        :boolean_card_title="index == -1 ? true : false"
+        string_card_title_1="関連"
+        string_card_title_2=""
+        string_card_title_3=""
+        :boolean_detail = true
+        :string_detail = "item[0]"
+        string_detail_sub = "(レーベル)"
+      />
+    </template>
+
+
     
   </v-container>
 </template>
@@ -143,7 +163,19 @@ const connection_tags = computed(() => {
 });
 
 
+const connection_labels = computed(() => {
+  // 初期化
+  let result = [];
 
+    // VIDEOS のvideo_tags.nameをリストで取得
+    for (const videos_video of VIDEOS.value) {
+      if (videos_video.video_label.name_eng === VIDEO_DETAIL.value.video_label.name_eng) {
+        result.push([VIDEO_DETAIL.value.video_label.name, videos_video]);
+        break; // パフォーマーが見つかったらループを抜ける
+      }
+    }
+  return result;
+});
 
 
 

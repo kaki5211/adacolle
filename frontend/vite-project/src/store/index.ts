@@ -128,6 +128,7 @@ const store = createStore({
     searchparams_video: {
       performers: [],
       tags: [],
+      labels:[]
     },
     searchparams_article: {
       tags: [],
@@ -213,6 +214,7 @@ const store = createStore({
     async FETCH_GET_VIDEOS_FILTERED({ commit, state }) {
       const tags = state.searchparams_video.tags;
       const performers = state.searchparams_video.performers;
+      const labels = state.searchparams_video.labels;
 
           // 値が入るまでポーリング
         const pollForArticleList = async () => {
@@ -226,7 +228,7 @@ const store = createStore({
       const VIDEOS = state.videos;
 
       // 両方の条件が空の場合はすべてのビデオを返す
-      if (tags.length === 0 && performers.length === 0) {
+      if (tags.length === 0 && performers.length === 0 && labels.length === 0) {
         commit('SET_VIDEOS_FILTERED', VIDEOS);
         return
       }
@@ -242,6 +244,12 @@ const store = createStore({
         const video_performers_list = video.video_performers.map(item => item.name_eng);
         return performers.length === 0 || performers.every(performer => video_performers_list.includes(performer));
       });
+
+      // レーベルでフィルタリング
+      temp = temp.filter(video => {
+        const video_labels_list = video.video_label.name_eng
+        return labels.length === 0 || labels.every(label => video_labels_list.includes(label));
+      });      
     
       // storeに登録
       commit('SET_VIDEOS_FILTERED', temp);

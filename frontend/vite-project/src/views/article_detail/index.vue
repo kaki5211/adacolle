@@ -56,7 +56,7 @@
     >
       <MyCardV1
         :kind="kind"
-        :my_card_list="ARTICLE_LIST"
+        :my_card_list="[item[1]]"
         :boolean_card_title="index == 0 ? true : false"
         string_card_title_1="関連"
         string_card_title_2=""
