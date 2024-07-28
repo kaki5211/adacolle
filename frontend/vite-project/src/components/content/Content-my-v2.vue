@@ -98,7 +98,7 @@
                             class="my-fit-contents text-caption ms-auto me-0 px-1 pl-2"
                             :prepend-icon="'mdi-tag-text'"
                             :to="{ name: 'Article', query: { tag: item.article_tag_name_eng, performer: '' } }"
-                            >
+                          >
                             {{item.article_tag_name}}
                           </v-btn>
                         </v-col>

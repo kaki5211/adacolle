@@ -6,7 +6,7 @@
 
 
 
-          <div class="pl-1">
+          <div class="pl-1 py-0">
             <v-breadcrumbs
               v-if="breadcrumbsList"
               :items="breadcrumbsList"
@@ -56,19 +56,14 @@ const VIDEOS = computed(() => { return store.getters.GET_VIDEOS; });
 
 const currentIndex = ref(0)
 
-
-
 import { watch } from 'vue'
 
 const loading = ref(false)
 
 watch(loading, (val) => {
   if (!val) return
-
   setTimeout(() => (loading.value = false), 2000)
 })
-
-
 
 const breadcrumbsList = computed(() => { return store.getters.GET_BREADCRUMBS; })
 

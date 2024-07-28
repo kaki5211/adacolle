@@ -21,10 +21,6 @@
       string_card_title_3=""
       :boolean_filter_account="boolean_filter_account"
       :boolean_filter_tag="boolean_filter_tag"
-
-      
-
-
     />
 
     <!-- <ArticleV3 /> -->
@@ -43,7 +39,6 @@
       :string_card_title_2="string_card_title_2"
       :string_card_title_3="string_card_title_3"
       :boolean_detail = false
-
     />
 
 

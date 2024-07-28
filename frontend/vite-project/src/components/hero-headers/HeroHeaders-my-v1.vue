@@ -2,8 +2,8 @@
   <v-card
     theme="dark"
     image="@/assets/heroheaders/1_planet.jpg"
-    min-height="680"
-    height="680"
+    min-height="380"
+    height="380"
   >
     <v-layout class="h-100">
       <!-- <v-app-bar

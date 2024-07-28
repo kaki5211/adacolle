@@ -39,33 +39,57 @@
     <v-spacer />
     
 
-        <v-toolbar-items v-if="mdAndUp">
+        <!-- <v-toolbar-items v-if="mdAndUp">
             <v-btn text="Home" />
 
             <v-btn text="Portfolio" />
 
             <v-btn text="Contact" />
-          </v-toolbar-items>
+          </v-toolbar-items> -->
 
-          <template #append>
             <template v-if="mdAndUp">
-              <v-icon
-                icon="mdi-twitter"
-                color="disabled"
-                class="me-2"
-              />
+              
+              <v-divider vertical class=""></v-divider>
 
-              <v-icon
-                icon="mdi-facebook"
-                color="disabled"
-                class="me-2"
-              />
+              <div style="display: flex; align-items: center;">
+                <a href="https://twitter.com/adacolle_jp/" target="_blank">
+                  <v-btn
+                    class="ma-2"
+                    color="white"
+                    icon="mdi-twitter"
+                    variant="text"
+                  />
+                </a>
 
-              <v-icon
-                icon="mdi-linkedin"
-                color="disabled"
-                class="me-2"
-              />
+                <v-divider vertical class=""></v-divider>
+
+                <a href="https://www.instagram.com/adacolle_jp/" target="_blank">
+                  <v-btn
+                    class="ma-2"
+                    color="white"
+                    icon="mdi-instagram"
+                    variant="text"
+                  />
+                </a>
+
+                <v-divider vertical class=""></v-divider>
+
+                <a href="https://www.dmm.co.jp/digital/" target="_blank" class="px-2">
+                  <v-btn
+                    append-icon="mdi-open-in-new"
+                    class="ma-2"
+                    color="white"
+                    variant="text"
+                  >
+                  FANZA 公式
+                  <!-- https://www.dmm.co.jp/digital/ -->
+                  <template v-slot:prepend>
+                    <!-- <v-icon color="success"></v-icon> -->
+                  </template>
+                  <!-- prepend -->
+                </v-btn>
+              </a>
+            </div>
 
             <!-- <v-btn
               class="ms-6 me-2"
@@ -76,13 +100,8 @@
               width="128"
             /> -->
 
-            <v-app-bar-nav-icon
-              class="d-inline-block"
-              @click="emit('click:toggle')"
-            />
             </template>
 
-          </template>
 
     <!-- <v-btn
       append-icon="mdi-open-in-new"
@@ -95,6 +114,7 @@
     /> -->
 
     <v-app-bar-nav-icon
+      v-if="!mdAndUp"
       class="d-inline-block"
       @click="emit('click:toggle')"
     />
