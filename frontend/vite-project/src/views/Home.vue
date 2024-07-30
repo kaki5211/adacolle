@@ -8,7 +8,11 @@
 
     <HeroHeaderMyV1 />
 
+    <!-- <div class="py-1" /> -->
+
+
     <div class="py-1" />
+
 
     <ContentMyV1 />
 
@@ -52,8 +56,25 @@
 
     <TeamMy1 />
 
-    <!-- <div class="py-1" /> -->
+    <div class="py-1" />
 
+    <v-card>
+      <v-list class="text-grey-darken-1 text-body-2" style="background-color: transparent;">
+        <v-list-item style="min-height: 28px; text-align: left;" v-for="(item, index) in items" :key="index" class="px-2 py-0">
+          <v-list-item-content>{{ item }}</v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-card>
+
+
+  <!-- <v-card-text class="d-flex flex-column justify-center h-100 px-3">
+            <h3 class="text-lg-h3 text-h5 font-weight-bold mb-4">
+              アダコレ
+            </h3>
+            <span class="text-grey-darken-1 -->
+
+    <!-- <div class="py-1" /> -->
+    
     <!-- <FooterMyV2 /> -->
 
   </v-container>
@@ -80,6 +101,9 @@ import TitleMyV5 from '@/components/title/Title-My-v5.vue'
 
 import MyCardV1 from '@/components/global/my-card-v1.vue'
 
+import MyTitleV1 from '@/components/global/my-title-v1.vue'
+
+
 
 import { useStore } from 'vuex';
 import { computed, ref } from 'vue';
@@ -87,4 +111,14 @@ import { computed, ref } from 'vue';
 const store = useStore();
 
 const ARTICLE_LIST = computed(() => { return store.getters.GET_ARTICLE_LIST; });
+
+
+const items =  [
+"※このサイトは以下の企業とプロモーション提携を結んでいます。", 
+        "・アマゾン（Amazon.com Inc様）",
+        "・楽天市場（楽天グループ株式会社様）",
+        "・大人のおもちゃ通販大魔王（有限会社アットプランニング様）",
+        "・NLS（株式会社ニジューヨン・ビムーンズ様）"
+      ]
+
 </script>

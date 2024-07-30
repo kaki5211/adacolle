@@ -9,7 +9,7 @@
           cols="12"
           sm="12"
           md="5"
-          class="d-flex flex-column justify-center align-center pa-5"
+          class="d-flex flex-column justify-center align-center pa-2 "
         >
           <v-img
             class="rounded elevation-0"
@@ -25,11 +25,13 @@
           md="6"
           offset-md="1"
         >
-          <v-card-text class="d-flex flex-column justify-center h-100">
+          <v-card-text class="d-flex flex-column justify-center h-100 px-3">
             <h3 class="text-lg-h3 text-h5 font-weight-bold mb-4">
               アダコレ
             </h3>
             <span class="text-grey-darken-1"><b>FANZA 素人AV / 18禁カテゴリー まとめブログ</b></span><br>
+
+
 
             <!-- <p class="text-grey-darken-1 mb-4"> -->
               <!-- FANZA 素人AV / 18禁カテゴリー まとめブログ -->
@@ -78,4 +80,9 @@
 
 <script lang="ts" setup>
 //
+
+const items =  [
+"このサイトは以下の企業とプロモーション提携を結んでいます。", 
+"・アマゾン　・楽天　・グーグル"
+      ]
 </script>
