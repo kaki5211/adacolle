@@ -8,7 +8,7 @@
         <v-col
           cols="12"
           sm="12"
-          md="5"
+          md="6"
           class="d-flex flex-column justify-center align-center pa-2 "
         >
           <v-img
@@ -22,10 +22,10 @@
         <v-col
           cols="12"
           sm="12"
-          md="6"
+          md="5"
           offset-md="1"
         >
-          <v-card-text class="d-flex flex-column justify-center h-100 px-3">
+          <v-card-text class="ml-md-5 d-flex flex-column justify-center h-100 px-3 mx-auto">
             <h3 class="text-lg-h3 text-h5 font-weight-bold mb-4">
               アダコレ
             </h3>

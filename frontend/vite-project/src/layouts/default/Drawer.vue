@@ -32,10 +32,25 @@
         </template>
       </template>
     </v-list>
+
+    <v-container>
+    <v-btn @click="toggleTheme">Click me to change color</v-btn>
+  </v-container>
+
   </v-navigation-drawer>
 </template>
 
 <script lang="ts" setup>
+
+import { ref, computed } from 'vue'
+import { useTheme } from 'vuetify'
+
+// Vuetifyのテーマ管理を利用
+const theme = useTheme()
+
+const currentTheme = ref('light')
+
+
 // const items = [
 //   { subheader: 'PAGES' },
 //   { title: 'Home', prependIcon: 'mdi-home-variant', to: '/' },
@@ -72,4 +87,13 @@ const items = [
   // { title: '記事  （ブログ） ', prependIcon: 'mdi-text-box', to: '/article' },
 
 ]
+
+const toggleTheme = () => {
+  currentTheme.value = currentTheme.value === 'light' ? 'dark' : 'light'
+  theme.global.name.value = currentTheme.value
+}
+
+
+
+
 </script>

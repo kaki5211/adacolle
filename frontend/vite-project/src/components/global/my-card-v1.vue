@@ -80,7 +80,7 @@
                         >
                         
                         <v-row v-if='kind==="video" && boolean_detail==false && boolean_detail_one==false' no-gutters
-                        class="d-none d-xs-block"
+                        class="d-none d-md-block"
                         >
                           <v-col cols="12" class="d-flex rounded-1"
                             v-for="(item2,iiiu) in ITEM.video_performers"
@@ -138,7 +138,7 @@
                             <v-row no-gutters>
                               <v-btn
                                 class="my-fit-contents pa-0 ma-auto text-md-h6"
-                                color="primary"
+                                color="rgb(38, 38, 38)"
                                 lazy-src="https://picsum.photos/id/11/100/60"
                                 prepend-icon="mdi-alpha-f"
                                 variant="text"
@@ -162,7 +162,7 @@
                             <v-row no-gutters>
                               <v-btn
                                 class="my-fit-contents pa-0 ma-auto text-md-h6"
-                                color="primary"
+                                color="rgb(38, 38, 38)"
                                 lazy-src="https://picsum.photos/id/11/100/60"
                                 prepend-icon="mdi-play-box"
                                 variant=""
@@ -225,7 +225,7 @@
                     </v-tooltip>
 
 
-                    <v-col v-if="true" class="pa-0">
+                    <v-col v-if="true" class="pa-0 d-md-none">
 
                       <template v-if="kind === 'video'">
 
@@ -269,7 +269,7 @@
                               exact
                               :to=url_account_video_or_article(item)
                               >
-                              {{ ITEM.video_label.name }}　
+                              {{ ITEM.video_label.name }}
                             </v-btn>
                           </template>
 
@@ -391,9 +391,9 @@
 
                     <v-col 
                       :cols="boolean_detail ? boolean_detail_one ? 12 : 12 : 12"
-                      :sm="boolean_detail ? boolean_detail_one ? 6 : 6 : 6"
+                      :sm="boolean_detail ? boolean_detail_one ? 11 : 11 : 11"
                       :md="boolean_detail ? boolean_detail_one ? 6 : 6 : 6"
-                      class="my-5 px-1 px-md-2"
+                      class="my-5 px-1 px-md-2 mx-auto"
                     >
                       <v-row no-gutters>
                         <v-col
@@ -402,7 +402,7 @@
                           :cols="boolean_detail ? boolean_detail_one ? 6 : 7 : 6"
                           :sm="boolean_detail ? boolean_detail_one ? 4 : 5 : 4"
                           :md="boolean_detail ? boolean_detail_one ? 4 : 3 : 4"
-                          class="pa-1 pa-md-2"
+                          class="pa-2 pa-md-1"
                         >
                           <v-img
                             class="rounded-t aspect-ratio-block"
