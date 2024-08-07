@@ -11,8 +11,11 @@
         </v-card>
 
   <div
-    class="d-none d-xs-block"
   >
+  <!-- <div
+  class="d-none d-xs-block"
+  > -->
+
       <v-row
       >
 
@@ -247,7 +250,7 @@
         <!-- ■■■ Mobile ■■■-->
         <!-- ■■■■■■■■■■■■■■ -->
       <v-row
-        class="d-xs-none"
+        class="d-none"
       >
 
 
@@ -331,7 +334,7 @@
                 <v-card v-if="boolean_filter_account" height="" class="my-bg-color-white" elevation=0>
                   <v-row no-gutters>
                     <v-col cols="12" class="border">
-                      <v-btn small outlined tile block class="my-text-color font-weight-medium rounded-b-0 elevation-0" color="primary"
+                      <v-btn small outlined tile block class="my-text-color font-weight-medium rounded-b-0 elevation-0" color="rgb(38, 38, 38)"
                       height=""><v-icon>mdi-account-circle</v-icon>アカウント</v-btn>
                         <v-row no-gutters class="my-auto">
                           <v-col cols="12" class="border px-2 py-1 pb-10">
@@ -384,7 +387,7 @@
                 <v-card v-if="boolean_filter_tag" height="" class="my-bg-color-white" elevation=0>
                   <v-row no-gutters>
                     <v-col cols="12" class="border">
-                      <v-btn small outlined tile block class="my-text-color my-text-size-40 font-weight-medium rounded-b-0 elevation-0" color="primary"
+                      <v-btn small outlined tile block class="my-text-color my-text-size-40 font-weight-medium rounded-b-0 elevation-0" color="rgb(38, 38, 38)"
                       height=""><v-icon>mdi-tag-text-outline</v-icon>タグ</v-btn>
                         <v-row no-gutters class="my-auto">
                           <v-col cols="12" class="border px-2 py-1 pb-10">
@@ -430,7 +433,7 @@
                 <v-card v-if="boolean_filter_account" height="" class="my-bg-color-white" elevation=0>
                   <v-row no-gutters>
                     <v-col cols="12" class="border">
-                      <v-btn small outlined tile block class="my-text-color font-weight-medium rounded-b-0 elevation-0" color="primary"
+                      <v-btn small outlined tile block class="my-text-color font-weight-medium rounded-b-0 elevation-0" color="rgb(38, 38, 38)"
                       height=""><v-icon>mdi-account-circle</v-icon>アカウント</v-btn>
                         <v-row no-gutters class="my-auto">
                           <v-col cols="12" class="border px-2 py-1 pb-10">
